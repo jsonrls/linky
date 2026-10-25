@@ -1,0 +1,58 @@
+[
+  {
+    "name": "navy text",
+    "foreground": "#0f172a",
+    "background": "#ffffff",
+    "ratio": 17.85253496299567,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "name": "instructions",
+    "foreground": "#475569",
+    "background": "#ffffff",
+    "ratio": 7.577663953533317,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "name": "loading",
+    "foreground": "#475569",
+    "background": "#f8fafc",
+    "ratio": 7.242510935504382,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "name": "error",
+    "foreground": "#b91c1c",
+    "background": "#ffffff",
+    "ratio": 6.4700447145121895,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "name": "primary text",
+    "foreground": "#ffffff",
+    "background": "#1d4ed8",
+    "ratio": 6.701618401398807,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "name": "control border",
+    "foreground": "#64748b",
+    "background": "#ffffff",
+    "ratio": 4.758842787868666,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "name": "focus ring",
+    "foreground": "#2563eb",
+    "background": "#ffffff",
+    "ratio": 5.168555560022562,
+    "minimum": 3,
+    "pass": true
+  }
+]

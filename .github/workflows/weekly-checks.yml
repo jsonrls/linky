@@ -1,0 +1,123 @@
+name: Weekly checks
+
+on:
+  schedule:
+    # Monday 09:37 Asia/Manila.
+    - cron: "37 1 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ci:
+    name: Tests and production dependency audit
+    permissions:
+      contents: read
+    uses: ./.github/workflows/ci.yml
+
+  dependency-audit:
+    name: Audit all dependencies
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Audit locked production and development dependencies
+        run: npm audit --package-lock-only --include=dev --audit-level=high
+
+  issue-inventory:
+    name: Open issue inventory
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      issues: read
+    steps:
+      - name: Generate inventory and triage hints
+        uses: actions/github-script@v8
+        env:
+          REPORT_DIR: ${{ runner.temp }}/weekly-issue-report
+        with:
+          retries: 3
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const now = new Date();
+            const day = 24 * 60 * 60 * 1000;
+            const daysSince = value => Math.max(0, Math.floor((now - new Date(value)) / day));
+            const text = value => String(value)
+              .replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029\u202a-\u202e\u2066-\u2069]/g, ' ')
+              .replace(/[\x21-\x2f\x3a-\x40\x5b-\x60\x7b-\x7e]/g, character => `&#${character.charCodeAt(0)};`);
+
+            const results = await github.paginate(github.rest.issues.listForRepo, {
+              ...context.repo,
+              state: 'open',
+              sort: 'updated',
+              direction: 'asc',
+              per_page: 100,
+            });
+            const issues = results
+              .filter(issue => !issue.pull_request && issue.state === 'open')
+              .sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at) || a.number - b.number);
+            const stale = issues.filter(issue => daysSince(issue.updated_at) >= 30).length;
+            const unassigned = issues.filter(issue => issue.assignees.length === 0).length;
+            const unlabeled = issues.filter(issue => issue.labels.length === 0).length;
+            const ageCount = (minimum, maximum) => issues.filter(issue => {
+              const age = daysSince(issue.created_at);
+              return age >= minimum && age < maximum;
+            }).length;
+            const repositoryUrl = `${process.env.GITHUB_SERVER_URL}/${encodeURIComponent(context.repo.owner)}/${encodeURIComponent(context.repo.repo)}`;
+            const heading = [
+              '# Open issue inventory',
+              '',
+              `Generated: ${now.toISOString()} for ${text(context.repo.owner)}/${text(context.repo.repo)}.`,
+              '',
+              'Generated inventory and triage hints only; this is not a semantic review of issue content, priority, duplicates, or resolution.',
+              'Pull requests are excluded. Stale means no update for at least 30 complete days; it does not mean an issue should be closed.',
+              'Ages are complete 24-hour days. Oldest updates appear first. Issue bodies and comments are not included.',
+              '',
+              '| Open issues | Stale (30+ days) | Unassigned | Unlabeled |',
+              '| --- | --- | --- | --- |',
+              `| ${issues.length} | ${stale} | ${unassigned} | ${unlabeled} |`,
+              '',
+              '| Age | Count |',
+              '| --- | --- |',
+              `| 0–6 days | ${ageCount(0, 7)} |`,
+              `| 7–29 days | ${ageCount(7, 30)} |`,
+              `| 30–89 days | ${ageCount(30, 90)} |`,
+              `| 90+ days | ${ageCount(90, Infinity)} |`,
+              '',
+              'Use stale, unassigned, and unlabeled entries as prompts for a human review of the linked issues.',
+              '',
+              '',
+            ].join('\n');
+            const table = '| Issue | Title | Age (days) | Since update (days) | Stale | Labels | Assignees |\n| --- | --- | --- | --- | --- | --- | --- |\n';
+            const rows = issues.map(issue => {
+              const labels = issue.labels.map(label => text(typeof label === 'string' ? label : label.name)).join(', ') || 'None';
+              const assignees = issue.assignees.map(assignee => text(assignee.login)).join(', ') || 'Unassigned';
+              const age = daysSince(issue.created_at);
+              const updated = daysSince(issue.updated_at);
+              return `| [#${issue.number}](${repositoryUrl}/issues/${issue.number}) | ${text(issue.title)} | ${age} | ${updated} | ${updated >= 30 ? 'Yes' : 'No'} | ${labels} | ${assignees} |\n`;
+            });
+            const report = heading + (issues.length ? table + rows.join('') : '\nNo open issues.\n');
+            await fs.mkdir(process.env.REPORT_DIR, { recursive: true });
+            await fs.writeFile(path.join(process.env.REPORT_DIR, 'open-issues.md'), report, 'utf8');
+
+            // Keep the summary below GitHub's 1 MiB limit; the artifact always contains every row.
+            const summary = Buffer.byteLength(report, 'utf8') <= 900_000
+              ? report
+              : heading + '\nThe full issue table exceeds the summary size limit. Download the open-issue-inventory artifact for all issues.\n';
+            await core.summary.addRaw(summary).write();
+      - name: Upload full issue inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-issue-inventory
+          path: ${{ runner.temp }}/weekly-issue-report/open-issues.md
+          if-no-files-found: error
+          retention-days: 90

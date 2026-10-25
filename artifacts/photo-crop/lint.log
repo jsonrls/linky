@@ -1,0 +1,10 @@
+
+> linky@0.1.0 lint
+> eslint .
+
+
+/Volumes/json SSD/dev-projects/linky/tests/e2e/photo-crop.spec.ts
+  271:15  error  Unexpected aliasing of 'this' to local variable  @typescript-eslint/no-this-alias
+
+✖ 1 problem (1 error, 0 warnings)
+

@@ -1,0 +1,57 @@
+{
+  "editor text on white": {
+    "foreground": "#0f172a",
+    "background": "#ffffff",
+    "ratio": 17.85
+  },
+  "editor text on canvas": {
+    "foreground": "#0f172a",
+    "background": "#f8fafc",
+    "ratio": 17.06
+  },
+  "hint on white": {
+    "foreground": "#475569",
+    "background": "#ffffff",
+    "ratio": 7.58
+  },
+  "error on white": {
+    "foreground": "#b91c1c",
+    "background": "#ffffff",
+    "ratio": 6.47
+  },
+  "select boundary on white": {
+    "foreground": "#64748b",
+    "background": "#ffffff",
+    "ratio": 4.76
+  },
+  "focus on white": {
+    "foreground": "#2563eb",
+    "background": "#ffffff",
+    "ratio": 5.17
+  },
+  "public first link warm": {
+    "foreground": "#ffffff",
+    "background": "#1d4ed8",
+    "ratio": 6.7
+  },
+  "public first hover warm": {
+    "foreground": "#ffffff",
+    "background": "#1e40af",
+    "ratio": 8.72
+  },
+  "public text ink": {
+    "foreground": "#f8fafc",
+    "background": "#0f172a",
+    "ratio": 17.06
+  },
+  "public first link ink": {
+    "foreground": "#0f172a",
+    "background": "#60a5fa",
+    "ratio": 7.02
+  },
+  "public first hover ink": {
+    "foreground": "#0f172a",
+    "background": "#93c5fd",
+    "ratio": 9.9
+  }
+}

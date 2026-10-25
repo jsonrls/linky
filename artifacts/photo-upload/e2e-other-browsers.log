@@ -1,0 +1,130 @@
+
+Running 6 tests using 1 worker
+
+(node:48624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [firefox] › tests/e2e/photo-upload.spec.ts:46:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access (0ms)
+(node:48637) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [firefox] › tests/e2e/photo-upload.spec.ts:108:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure (0ms)
+(node:48639) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [firefox] › tests/e2e/photo-upload.spec.ts:162:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests (2ms)
+(node:48642) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [webkit] › tests/e2e/photo-upload.spec.ts:46:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access (8.0s)
+  -  5 [webkit] › tests/e2e/photo-upload.spec.ts:108:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure
+  -  6 [webkit] › tests/e2e/photo-upload.spec.ts:162:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests
+
+
+  1) [firefox] › tests/e2e/photo-upload.spec.ts:46:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access 
+
+    Error: browserType.launch: Failed to launch the browser process.
+    Browser logs:
+
+    <launching> /Users/jaysonreales/Library/Caches/ms-playwright/firefox-1555/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/sc/ytyq1pp961j1ccy5gzb7gd0c0000gn/T/playwright_firefoxdev_profile-47SuiP -juggler-pipe -silent
+    <launched> pid=48630
+    [pid=48630][err] *** You are running in headless mode.
+    [pid=48630][err] Could not find profile folder.
+    [pid=48630] <process did exit: exitCode=1, signal=null>
+    [pid=48630] starting temporary directories cleanup
+    Call log:
+      - <launching> /Users/jaysonreales/Library/Caches/ms-playwright/firefox-1555/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/sc/ytyq1pp961j1ccy5gzb7gd0c0000gn/T/playwright_firefoxdev_profile-47SuiP -juggler-pipe -silent
+      - <launched> pid=48630
+      - [pid=48630][err] *** You are running in headless mode.
+      - [pid=48630][err] Could not find profile folder.
+      - [pid=48630] <process did exit: exitCode=1, signal=null>
+      - [pid=48630] starting temporary directories cleanup
+      - [pid=48630] <gracefully close start>
+      - [pid=48630] <kill>
+      - [pid=48630] <skipped force kill spawnedProcess.killed=false processClosed=true>
+      - [pid=48630] finished temporary directories cleanup
+      - [pid=48630] <gracefully close end>
+
+
+    Error Context: test-results/photo-upload-device-photo--62f7e-and-unpublish-revoke-access-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/photo-upload-device-photo--62f7e-and-unpublish-revoke-access-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/photo-upload-device-photo--62f7e-and-unpublish-revoke-access-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › tests/e2e/photo-upload.spec.ts:108:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure 
+
+    Error: browserType.launch: Failed to launch the browser process.
+    Browser logs:
+
+    <launching> /Users/jaysonreales/Library/Caches/ms-playwright/firefox-1555/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/sc/ytyq1pp961j1ccy5gzb7gd0c0000gn/T/playwright_firefoxdev_profile-RdvX4H -juggler-pipe -silent
+    <launched> pid=48638
+    [pid=48638][err] *** You are running in headless mode.
+    [pid=48638][err] Could not find profile folder.
+    [pid=48638] <process did exit: exitCode=1, signal=null>
+    [pid=48638] starting temporary directories cleanup
+    Call log:
+      - <launching> /Users/jaysonreales/Library/Caches/ms-playwright/firefox-1555/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/sc/ytyq1pp961j1ccy5gzb7gd0c0000gn/T/playwright_firefoxdev_profile-RdvX4H -juggler-pipe -silent
+      - <launched> pid=48638
+      - [pid=48638][err] *** You are running in headless mode.
+      - [pid=48638][err] Could not find profile folder.
+      - [pid=48638] <process did exit: exitCode=1, signal=null>
+      - [pid=48638] starting temporary directories cleanup
+      - [pid=48638] <gracefully close start>
+      - [pid=48638] <kill>
+      - [pid=48638] <skipped force kill spawnedProcess.killed=false processClosed=true>
+      - [pid=48638] finished temporary directories cleanup
+      - [pid=48638] <gracefully close end>
+
+
+    Error Context: test-results/photo-upload-upload-allows-ad453-revious-photo-after-failure-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/photo-upload-upload-allows-ad453-revious-photo-after-failure-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/photo-upload-upload-allows-ad453-revious-photo-after-failure-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [firefox] › tests/e2e/photo-upload.spec.ts:162:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests 
+
+    Error: browserType.launch: Failed to launch the browser process.
+    Browser logs:
+
+    <launching> /Users/jaysonreales/Library/Caches/ms-playwright/firefox-1555/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/sc/ytyq1pp961j1ccy5gzb7gd0c0000gn/T/playwright_firefoxdev_profile-Ai7eki -juggler-pipe -silent
+    <launched> pid=48640
+    [pid=48640][err] *** You are running in headless mode.
+    [pid=48640][err] Could not find profile folder.
+    [pid=48640] <process did exit: exitCode=1, signal=null>
+    [pid=48640] starting temporary directories cleanup
+    Call log:
+      - <launching> /Users/jaysonreales/Library/Caches/ms-playwright/firefox-1555/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/sc/ytyq1pp961j1ccy5gzb7gd0c0000gn/T/playwright_firefoxdev_profile-Ai7eki -juggler-pipe -silent
+      - <launched> pid=48640
+      - [pid=48640][err] *** You are running in headless mode.
+      - [pid=48640][err] Could not find profile folder.
+      - [pid=48640] <process did exit: exitCode=1, signal=null>
+      - [pid=48640] starting temporary directories cleanup
+      - [pid=48640] <gracefully close start>
+      - [pid=48640] <kill>
+      - [pid=48640] <skipped force kill spawnedProcess.killed=false processClosed=true>
+      - [pid=48640] finished temporary directories cleanup
+      - [pid=48640] <gracefully close end>
+
+
+    Error Context: test-results/photo-upload-upload-reject-82e5f-rted-and-malformed-requests-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/photo-upload-upload-reject-82e5f-rted-and-malformed-requests-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/photo-upload-upload-reject-82e5f-rted-and-malformed-requests-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [firefox] › tests/e2e/photo-upload.spec.ts:46:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access 
+    [firefox] › tests/e2e/photo-upload.spec.ts:108:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure 
+    [firefox] › tests/e2e/photo-upload.spec.ts:162:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests 
+  2 skipped
+  1 passed (12.3s)

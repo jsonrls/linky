@@ -1,0 +1,13 @@
+{
+  "widths": [
+    390,
+    320
+  ],
+  "focus": "exact row trigger",
+  "close": [
+    "Escape",
+    "Close"
+  ],
+  "resize": "modal closes at 1100px; no reopen on shrinking",
+  "horizontalOverflow": false
+}

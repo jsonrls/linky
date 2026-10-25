@@ -1,0 +1,182 @@
+[
+  {
+    "label": "Behance",
+    "hex": "1769FF",
+    "source": "https://www.behance.net",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Bluesky",
+    "hex": "1185FE",
+    "source": "https://bsky.social/about/blog/press-faq",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Discord",
+    "hex": "5865F2",
+    "source": "https://discord.com/branding",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Dribbble",
+    "hex": "EA4C89",
+    "source": "https://dribbble.com/branding",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Facebook",
+    "hex": "0866FF",
+    "source": "https://about.meta.com/brand/resources/facebook/logo",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "GitHub",
+    "hex": "181717",
+    "source": "https://github.com/logos",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Instagram",
+    "hex": "FF0069",
+    "source": "https://about.meta.com/brand/resources/instagram",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Kick",
+    "hex": "53FC19",
+    "source": "https://kick.com",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "LINE",
+    "hex": "00C300",
+    "source": "https://line.me/en/logo",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "LinkedIn",
+    "hex": "0A66C2",
+    "source": "https://brand.linkedin.com",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.0.0/_data/simple-icons.json"
+  },
+  {
+    "label": "Mastodon",
+    "hex": "6364FF",
+    "source": "https://github.com/mastodon/mastodon/blob/7ccf7a73f1c47a8c03712c39f7c591e837cf6d08/app/javascript/images/logo-symbol-icon.svg",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Medium",
+    "hex": "000000",
+    "source": "https://medium.design/logos-and-brand-guidelines-f1a01a733592",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Messenger",
+    "hex": "0866FF",
+    "source": "https://about.meta.com/brand/resources/facebook/messenger-icon",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Patreon",
+    "hex": "000000",
+    "source": "https://www.patreon.com/brand",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Pinterest",
+    "hex": "BD081C",
+    "source": "https://business.pinterest.com/en/brand-guidelines",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Reddit",
+    "hex": "FF4500",
+    "source": "https://www.redditinc.com/brand",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Signal",
+    "hex": "3B45FD",
+    "source": "https://signal.org/brand",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Snapchat",
+    "hex": "FFFC00",
+    "source": "https://www.snapchat.com/brand-guidelines",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "SoundCloud",
+    "hex": "FF5500",
+    "source": "https://press.soundcloud.com",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Spotify",
+    "hex": "1ED760",
+    "source": "https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Substack",
+    "hex": "FF6719",
+    "source": "https://on.substack.com",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Telegram",
+    "hex": "26A5E4",
+    "source": "https://telegram.org/tour/screenshots",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Threads",
+    "hex": "000000",
+    "source": "https://www.meta.com/brand/resources/instagram/threads",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "TikTok",
+    "hex": "000000",
+    "source": "https://tiktok.com",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Tumblr",
+    "hex": "36465D",
+    "source": "https://www.tumblr.com/logo",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Twitch",
+    "hex": "9146FF",
+    "source": "https://brand.twitch.tv",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "Vimeo",
+    "hex": "1AB7EA",
+    "source": "https://press.vimeo.com/brand-guidelines",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "WhatsApp",
+    "hex": "25D366",
+    "source": "https://about.meta.com/brand/resources/whatsapp/whatsapp-brand",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "X",
+    "hex": "000000",
+    "source": "https://x.com",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  },
+  {
+    "label": "YouTube",
+    "hex": "FF0000",
+    "source": "https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors",
+    "metadata": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json"
+  }
+]

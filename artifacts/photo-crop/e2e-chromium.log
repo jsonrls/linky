@@ -1,0 +1,158 @@
+
+Running 10 tests using 1 worker
+
+(node:54075) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › tests/e2e/photo-crop.spec.ts:112:5 › cancel, Escape and close send no upload; reset, arrows, buttons and captured drag clamp the local crop (3.4s)
+  ✘   2 [chromium] › tests/e2e/photo-crop.spec.ts:236:5 › preparation, stale decode cancellation, decode error, choose another and size errors keep local state disposable (6.2s)
+(node:54187) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   3 [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 2 bytes and cropped browser preview match server output (1.6s)
+(node:54204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   4 [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 6 bytes and cropped browser preview match server output (1.5s)
+(node:54219) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   5 [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 7 bytes and cropped browser preview match server output (1.5s)
+(node:54231) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 [chromium] › tests/e2e/photo-crop.spec.ts:509:5 › known autosave session expiry keeps crop open with disabled confirmation and no photo POST (2.7s)
+  ✓   7 [chromium] › tests/e2e/photo-upload.spec.ts:86:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access (7.2s)
+  ✓   8 [chromium] › tests/e2e/photo-upload.spec.ts:200:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure (5.5s)
+  ✓   9 [chromium] › tests/e2e/photo-upload.spec.ts:345:5 › expired upload uses existing sign-in recovery and an unmounted editor ignores a late upload (4.6s)
+  ✓  10 [chromium] › tests/e2e/photo-upload.spec.ts:444:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests (1.4s)
+
+
+  1) [chromium] › tests/e2e/photo-crop.spec.ts:236:5 › preparation, stale decode cancellation, decode error, choose another and size errors keep local state disposable 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'Adjust profile photo' }).getByText('Preparing photo…', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'Adjust profile photo' }).getByText('Preparing photo…', { exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Adjust profile photo' }).getByText('Preparing photo…', { exact: true })
+
+
+      280 |     await expect(
+      281 |       dialogFor(page).getByText("Preparing photo…", { exact: true }),
+    > 282 |     ).toBeVisible();
+          |       ^
+      283 |     await expect(
+      284 |       dialogFor(page).getByRole("button", {
+      285 |         name: "Upload photo",
+        at /Volumes/json SSD/dev-projects/linky/tests/e2e/photo-crop.spec.ts:282:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-preparation-sta-9bf0d-keep-local-state-disposable-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/photo-crop/playwright-chromium/photo-crop-preparation-sta-9bf0d-keep-local-state-disposable-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-preparation-sta-9bf0d-keep-local-state-disposable-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/photo-crop/playwright-chromium/photo-crop-preparation-sta-9bf0d-keep-local-state-disposable-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 2 bytes and cropped browser preview match server output 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: {"data": [255, 216, 255, 225, 0, 188, 69, 120, 105, 102, …], "type": "Buffer"}
+    Received: null
+
+      417 |       const request = await requestPromise,
+      418 |         response = await responsePromise;
+    > 419 |       expect(request.postDataBuffer()).toEqual(original.buffer);
+          |                                        ^
+      420 |       expect(request.headers()["content-type"]).toBe("image/jpeg");
+      421 |       const crop = JSON.parse(request.headers()["x-photo-crop"]);
+      422 |       expect(crop.zoom).toBe(3);
+        at /Volumes/json SSD/dev-projects/linky/tests/e2e/photo-crop.spec.ts:419:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-2-d9395-preview-match-server-output-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-2-d9395-preview-match-server-output-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-2-d9395-preview-match-server-output-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-2-d9395-preview-match-server-output-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 6 bytes and cropped browser preview match server output 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: {"data": [255, 216, 255, 225, 0, 188, 69, 120, 105, 102, …], "type": "Buffer"}
+    Received: null
+
+      417 |       expect(request.headers()["content-type"]).toBe("image/jpeg");
+      418 |       const crop = JSON.parse(request.headers()["x-photo-crop"]);
+    > 419 |       expect(crop.zoom).toBe(3);
+          |                                 ^
+      420 |       expect(crop.centerX).toBeCloseTo(0.5 + (0.1 * 80) / dimensions.width);
+      421 |       expect(crop.centerY).toBeCloseTo(0.5 + (0.1 * 80) / dimensions.height);
+      422 |       expect(response.ok(), await response.text()).toBe(true);
+        at /Volumes/json SSD/dev-projects/linky/tests/e2e/photo-crop.spec.ts:419:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-6-daec4-preview-match-server-output-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-6-daec4-preview-match-server-output-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-6-daec4-preview-match-server-output-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-6-daec4-preview-match-server-output-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 7 bytes and cropped browser preview match server output 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: {"data": [255, 216, 255, 225, 0, 188, 69, 120, 105, 102, …], "type": "Buffer"}
+    Received: null
+
+      417 |       expect(request.headers()["content-type"]).toBe("image/jpeg");
+      418 |       const crop = JSON.parse(request.headers()["x-photo-crop"]);
+    > 419 |       expect(crop.zoom).toBe(3);
+          |                                 ^
+      420 |       expect(crop.centerX).toBeCloseTo(0.5 + (0.1 * 80) / dimensions.width);
+      421 |       expect(crop.centerY).toBeCloseTo(0.5 + (0.1 * 80) / dimensions.height);
+      422 |       expect(response.ok(), await response.text()).toBe(true);
+        at /Volumes/json SSD/dev-projects/linky/tests/e2e/photo-crop.spec.ts:419:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-7-f7709-preview-match-server-output-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-7-f7709-preview-match-server-output-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-7-f7709-preview-match-server-output-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/photo-crop/playwright-chromium/photo-crop-original-EXIF-7-f7709-preview-match-server-output-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/e2e/photo-crop.spec.ts:236:5 › preparation, stale decode cancellation, decode error, choose another and size errors keep local state disposable 
+    [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 2 bytes and cropped browser preview match server output 
+    [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 6 bytes and cropped browser preview match server output 
+    [chromium] › tests/e2e/photo-crop.spec.ts:368:7 › original EXIF 7 bytes and cropped browser preview match server output 
+  6 passed (38.2s)

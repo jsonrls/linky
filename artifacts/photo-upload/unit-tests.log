@@ -1,0 +1,14 @@
+
+> linky@0.1.0 test
+> vitest run --reporter=dot
+
+
+ RUN  v5.0.5 /Volumes/json SSD/dev-projects/linky
+
+·································································································································································
+
+ Test Files  9 passed (9)
+      Tests  161 passed (161)
+   Start at  09:05:41
+   Duration  690ms (import 63%, tests 19%, transform 17%, worker 1%)
+

@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:49815) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/photo-upload.spec.ts:194:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure (5.4s)
+
+  1 passed (6.1s)

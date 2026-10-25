@@ -1,0 +1,107 @@
+--- before/src/features/editor/Editor.tsx
++++ after/src/features/editor/Editor.tsx
+@@ -137,7 +137,7 @@
+     setMessage(`${type === "link" ? "Link" : "Text"} added at the end.`);
+     requestAnimationFrame(() =>
+       document
+-        .getElementById(`${type === "link" ? "label" : "block"}-${block.id}`)
++        .getElementById(`${type === "link" ? "url" : "block"}-${block.id}`)
+         ?.focus(),
+     );
+   }
+@@ -568,6 +568,22 @@
+                           <div className="block-body">
+                             {block.type === "link" ? (
+                               <>
++                                <Field
++                                  id={`url-${block.id}`}
++                                  error={
++                                    invalidField?.field === `url-${block.id}`
++                                      ? invalidField.message
++                                      : undefined
++                                  }
++                                  label="Destination URL"
++                                  value={block.url}
++                                  type="url"
++                                  maxLength={2048}
++                                  onChange={(e) =>
++                                    updateLinkUrl(block, e.target.value)
++                                  }
++                                  hint="Supports automatic platform detection. HTTP or HTTPS. Use an ASCII hostname, IPv4 or bracketed IPv6 address, without credentials."
++                                />
+                                 <LinkLabelField
+                                   id={block.id}
+                                   error={
+@@ -592,22 +608,6 @@
+                                       label,
+                                     });
+                                   }}
+-                                />
+-                                <Field
+-                                  id={`url-${block.id}`}
+-                                  error={
+-                                    invalidField?.field === `url-${block.id}`
+-                                      ? invalidField.message
+-                                      : undefined
+-                                  }
+-                                  label="Destination URL"
+-                                  value={block.url}
+-                                  type="url"
+-                                  maxLength={2048}
+-                                  onChange={(e) =>
+-                                    updateLinkUrl(block, e.target.value)
+-                                  }
+-                                  hint="Supports automatic platform detection. HTTP or HTTPS. Use an ASCII hostname, IPv4 or bracketed IPv6 address, without credentials."
+                                 />
+                               </>
+                             ) : (
+--- before/tests/e2e/social-links.spec.ts
++++ after/tests/e2e/social-links.spec.ts
+@@ -84,7 +84,7 @@
+     await page.getByRole("button", { name: "Add link", exact: true }).click();
+     const custom = page.locator(".block").nth(1);
+     const customSelect = custom.getByLabel("Link label", { exact: true });
+-    await expect(customSelect).toBeFocused();
++    await expect(custom.getByLabel("Destination URL")).toBeFocused();
+     await expect(customSelect).toHaveValue("");
+     await customSelect.selectOption("custom");
+     const customLabel = custom.getByLabel("Custom label", { exact: true });
+@@ -185,7 +185,7 @@
+     await createProfile(page);
+     await page.getByRole("button", { name: "Add link", exact: true }).click();
+     const select = page.getByLabel("Link label", { exact: true });
+-    await expect(select).toBeFocused();
++    await expect(page.getByLabel("Destination URL")).toBeFocused();
+     await page.getByLabel("Destination URL").fill("https://example.com/");
+     await page.locator("summary").click();
+     await attemptPublish(page);
+--- before/tests/e2e/link-detection.spec.ts
++++ after/tests/e2e/link-detection.spec.ts
+@@ -41,7 +41,10 @@
+     const block = page.locator(".block").first();
+     const select = block.getByLabel("Link label", { exact: true });
+     const url = block.getByLabel("Destination URL");
++    await expect(url).toBeFocused();
+     await expect(select).toHaveValue("");
++    await url.press("Tab");
++    await expect(select).toBeFocused();
+     const raw = "https://WWW.INSTAGRAM.COM/person?from=clipboard#bio";
+     await pasteUrl(page, url, raw);
+     await expect(select).toHaveValue("Instagram");
+@@ -87,6 +90,7 @@
+     const automatic = page.locator(".block").nth(1);
+     const automaticSelect = automatic.getByLabel("Link label", { exact: true });
+     const automaticUrl = automatic.getByLabel("Destination URL");
++    await expect(automaticUrl).toBeFocused();
+     await pasteUrl(page, automaticUrl, "https://github.com/person");
+     await automatic.getByRole("button", { name: "Hide", exact: true }).click();
+     await expect(page.locator(".preview-frame .public-link")).toHaveCount(1);
+@@ -102,7 +106,7 @@
+     await saved(page);
+     await mkdir("artifacts/link-detection", { recursive: true });
+     await page.screenshot({
+-      path: "artifacts/link-detection/editor-detected.png",
++      path: "artifacts/link-detection/editor-url-first.png",
+       fullPage: true,
+     });
+     await page.reload();

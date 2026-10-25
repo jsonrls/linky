@@ -1,0 +1,76 @@
+
+Running 6 tests using 1 worker
+
+(node:48907) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/photo-upload.spec.ts:80:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access (9.9s)
+  ✓  2 [chromium] › tests/e2e/photo-upload.spec.ts:190:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure (5.4s)
+  ✘  3 [chromium] › tests/e2e/photo-upload.spec.ts:315:5 › expired upload uses existing sign-in recovery and an unmounted editor ignores a late upload (8.7s)
+(node:49150) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [chromium] › tests/e2e/photo-upload.spec.ts:416:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests (1.4s)
+  ✓  5 [chromium] › tests/e2e/templates.spec.ts:320:5 › media fields reveal on publish errors; browser failures collapse layouts; publishing isolates media (8.2s)
+  ✘  6 [chromium] › tests/e2e/templates.spec.ts:584:5 › failed image retries after removal and after another URL succeeds (3.9s)
+
+
+  1) [chromium] › tests/e2e/photo-upload.spec.ts:315:5 › expired upload uses existing sign-in recovery and an unmounted editor ignores a late upload 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/Uploading photo…/)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText(/Uploading photo…/) with timeout 5000ms
+      - waiting for getByText(/Uploading photo…/)
+        - waiting for navigation to finish...
+        - navigated to "http://127.0.0.1:3000/app/profiles"
+
+
+      392 |     });
+      393 |     // The editor deliberately blocks its own navigation while upload is pending.
+    > 394 |     await expect(page.getByText(/Uploading photo…/)).toBeVisible();
+          |                                                      ^
+      395 |     const destination = "/app/profiles";
+      396 |     await page.goto(destination);
+      397 |     release();
+        at /Volumes/json SSD/dev-projects/linky/tests/e2e/photo-upload.spec.ts:394:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/photo-upload-expired-uploa-66254-ditor-ignores-a-late-upload-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/photo-upload-expired-uploa-66254-ditor-ignores-a-late-upload-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/photo-upload-expired-uploa-66254-ditor-ignores-a-late-upload-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/photo-upload-expired-uploa-66254-ditor-ignores-a-late-upload-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/templates.spec.ts:584:5 › failed image retries after removal and after another URL succeeds 
+
+    Error: browserContext.close: ENOENT: no such file or directory, open '/Volumes/json SSD/dev-projects/linky/test-results/.playwright-artifacts-1/traces/1772d640e91cdbbb6eb8-c5d277a8eeed969dad3e-recording6.network'
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/templates-failed-image-ret-5775c--after-another-URL-succeeds-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/templates-failed-image-ret-5775c--after-another-URL-succeeds-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/templates-failed-image-ret-5775c--after-another-URL-succeeds-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/templates-failed-image-ret-5775c--after-another-URL-succeeds-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/photo-upload.spec.ts:315:5 › expired upload uses existing sign-in recovery and an unmounted editor ignores a late upload 
+    [chromium] › tests/e2e/templates.spec.ts:584:5 › failed image retries after removal and after another URL succeeds 
+  4 passed (40.3s)

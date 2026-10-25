@@ -1,0 +1,82 @@
+[
+  {
+    "template": "electric-index",
+    "minimum": 17
+  },
+  {
+    "template": "soft-motion",
+    "minimum": 9.49
+  },
+  {
+    "template": "contact-sheet",
+    "minimum": 13.75
+  },
+  {
+    "template": "cobalt-objects",
+    "minimum": 5.69
+  },
+  {
+    "template": "studio-index",
+    "minimum": 16.4
+  },
+  {
+    "template": "sunday-kitchen",
+    "minimum": 5.74
+  },
+  {
+    "template": "quiet-cadence",
+    "minimum": 8.82
+  },
+  {
+    "template": "lift-log",
+    "minimum": 6.72
+  },
+  {
+    "template": "open-house",
+    "minimum": 7.52
+  },
+  {
+    "template": "garden-dispatch",
+    "minimum": 8.18
+  },
+  {
+    "template": "night-shift",
+    "minimum": 17.79
+  },
+  {
+    "template": "route-postcard",
+    "minimum": 11.02
+  },
+  {
+    "template": "the-big-question",
+    "minimum": 13.93
+  },
+  {
+    "template": "objects-and-hands",
+    "minimum": 8.58
+  },
+  {
+    "template": "distance-club",
+    "minimum": 8.64
+  },
+  {
+    "template": "screening-room",
+    "minimum": 10.82
+  },
+  {
+    "template": "type-practice",
+    "minimum": 18.69
+  },
+  {
+    "template": "soft-power",
+    "minimum": 8.95
+  },
+  {
+    "template": "culture-receipt",
+    "minimum": 17.6
+  },
+  {
+    "template": "coastal-assembly",
+    "minimum": 6.11
+  }
+]

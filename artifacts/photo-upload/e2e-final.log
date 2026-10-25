@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:49416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/photo-upload.spec.ts:78:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access (6.5s)
+  ✓  2 [chromium] › tests/e2e/photo-upload.spec.ts:194:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure (5.4s)
+  ✓  3 [chromium] › tests/e2e/photo-upload.spec.ts:337:5 › expired upload uses existing sign-in recovery and an unmounted editor ignores a late upload (5.4s)
+  ✓  4 [chromium] › tests/e2e/photo-upload.spec.ts:434:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests (2.4s)
+  ✓  5 [chromium] › tests/e2e/templates.spec.ts:320:5 › media fields reveal on publish errors; browser failures collapse layouts; publishing isolates media (11.4s)
+  ✓  6 [chromium] › tests/e2e/templates.spec.ts:584:5 › failed image retries after removal and after another URL succeeds (3.5s)
+
+  6 passed (35.2s)

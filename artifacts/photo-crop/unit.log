@@ -1,0 +1,13 @@
+
+> linky@0.1.0 test
+> vitest run src/features/profile-photos/crop.test.ts src/features/profile-photos/image.test.ts src/features/profile-photos/paths.test.ts
+
+
+ RUN  v5.0.5 /Volumes/json SSD/dev-projects/linky
+
+
+ Test Files  3 passed (3)
+      Tests  48 passed (48)
+   Start at  09:42:49
+   Duration  269ms (import 48%, tests 34%, transform 16%, worker 2%)
+

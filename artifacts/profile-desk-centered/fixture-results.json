@@ -1,0 +1,17 @@
+{
+  "allLinksDisabled": true,
+  "avatar": {
+    "centerDelta": 0,
+    "height": 96,
+    "width": 96
+  },
+  "firstLink": {
+    "background": "rgb(255, 255, 255)",
+    "text": "rgb(15, 23, 42)"
+  },
+  "imageAboveBody": true,
+  "imageLoaded": true,
+  "labelOverflow": false,
+  "overflow": false,
+  "width": 320
+}

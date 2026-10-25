@@ -1,0 +1,21 @@
+src/features/profile-photos/image.test.ts 36ms
+src/features/profile-photos/image.ts 7ms
+src/features/profile-photos/paths.test.ts 5ms
+src/features/profile-photos/paths.ts 2ms
+src/features/editor/ProfilePhoto.tsx 10ms
+src/features/editor/useProfilePhoto.ts 5ms
+src/features/editor/Editor.tsx 47ms
+src/features/editor/useDraft.ts 7ms
+src/features/editor/editor.css 32ms (unchanged)
+src/features/profiles/model.ts 13ms
+src/features/public-profile/ProfileMedia.tsx 2ms
+src/features/public-profile/ProfileRenderer.tsx 9ms
+src/features/public-profile/TemplateHeader.tsx 5ms (unchanged)
+src/lib/http.ts 6ms (unchanged)
+src/types/database.ts 12ms
+src/app/api/profile-photos/[profile]/[asset]/route.ts 3ms
+src/app/api/profiles/[id]/photo/route.ts 3ms
+tests/e2e/photo-upload.spec.ts 22ms
+tests/e2e/templates.spec.ts 34ms
+tests/integration/profile-photos.test.mjs 20ms
+tests/fixtures/managed-avatars.json 1ms

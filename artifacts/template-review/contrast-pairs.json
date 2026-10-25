@@ -1,0 +1,257 @@
+{
+  "scope": "Explicit static foreground/background CSS pairs only; not full accessibility certification",
+  "pairs": [
+    {
+      "selector": ".template-surface",
+      "foreground": "#151515",
+      "background": "#fff",
+      "ratio": 18.26
+    },
+    {
+      "selector": ".template-electric-index",
+      "foreground": "#111",
+      "background": "#edff00",
+      "ratio": 17.0
+    },
+    {
+      "selector": ".template-soft-motion",
+      "foreground": "#4e3024",
+      "background": "#f6e3d1",
+      "ratio": 9.49
+    },
+    {
+      "selector": ".template-soft-motion .template-link[data-first]",
+      "foreground": "#fff8ef",
+      "background": "#4e3024",
+      "ratio": 11.24
+    },
+    {
+      "selector": ".template-contact-sheet",
+      "foreground": "#111",
+      "background": "#f8f7f4",
+      "ratio": 17.63
+    },
+    {
+      "selector": ".template-contact-sheet .template-link",
+      "foreground": "#fff",
+      "background": "#161616",
+      "ratio": 18.1
+    },
+    {
+      "selector": ".template-contact-sheet .template-link:nth-child(even)",
+      "foreground": "#111",
+      "background": "#dddcd7",
+      "ratio": 13.75
+    },
+    {
+      "selector": ".template-cobalt-objects",
+      "foreground": "#fff",
+      "background": "#0743ce",
+      "ratio": 7.77
+    },
+    {
+      "selector": ".template-cobalt-objects .template-link",
+      "foreground": "#0739a8",
+      "background": "#edf1ff",
+      "ratio": 8.62
+    },
+    {
+      "selector": ".template-cobalt-objects .template-link:nth-child(3n)",
+      "foreground": "#20120c",
+      "background": "#ff542f",
+      "ratio": 5.69
+    },
+    {
+      "selector": ".template-studio-index",
+      "foreground": "#161616",
+      "background": "#f4f4ef",
+      "ratio": 16.4
+    },
+    {
+      "selector": ".template-sunday-kitchen",
+      "foreground": "#272015",
+      "background": "#faf4e7",
+      "ratio": 14.7
+    },
+    {
+      "selector": ".template-sunday-kitchen .template-link[data-first]",
+      "foreground": "#fff",
+      "background": "#b52c1a",
+      "ratio": 6.29
+    },
+    {
+      "selector": ".template-quiet-cadence",
+      "foreground": "#183c4e",
+      "background": "#c9e4ef",
+      "ratio": 8.82
+    },
+    {
+      "selector": ".template-quiet-cadence .template-link[data-first]",
+      "foreground": "#213c15",
+      "background": "#e6ffa8",
+      "ratio": 11.17
+    },
+    {
+      "selector": ".template-lift-log",
+      "foreground": "#ffe4cc",
+      "background": "#232323",
+      "ratio": 12.89
+    },
+    {
+      "selector": ".template-lift-log .template-link",
+      "foreground": "#232323",
+      "background": "#ffe4cc",
+      "ratio": 12.89
+    },
+    {
+      "selector": ".template-open-house",
+      "foreground": "#252827",
+      "background": "#f3f3f0",
+      "ratio": 13.38
+    },
+    {
+      "selector": ".template-garden-dispatch",
+      "foreground": "#243d24",
+      "background": "#fcf4ca",
+      "ratio": 10.71
+    },
+    {
+      "selector": ".template-garden-dispatch .template-link:nth-child(odd)",
+      "foreground": "#fff9dd",
+      "background": "#35532c",
+      "ratio": 8.18
+    },
+    {
+      "selector": ".template-night-shift",
+      "foreground": "#e8ff61",
+      "background": "#090b08",
+      "ratio": 17.79
+    },
+    {
+      "selector": ".template-night-shift .template-link[data-first]",
+      "foreground": "#090b08",
+      "background": "#e8ff61",
+      "ratio": 17.79
+    },
+    {
+      "selector": ".template-route-postcard",
+      "foreground": "#102e50",
+      "background": "#d4eaf2",
+      "ratio": 11.02
+    },
+    {
+      "selector": ".template-route-postcard .template-number",
+      "foreground": "#fff",
+      "background": "#b83823",
+      "ratio": 5.79
+    },
+    {
+      "selector": ".template-the-big-question",
+      "foreground": "#0b2355",
+      "background": "#faf5e9",
+      "ratio": 13.93
+    },
+    {
+      "selector": ".template-objects-and-hands",
+      "foreground": "#4a3022",
+      "background": "#e6d7c6",
+      "ratio": 8.58
+    },
+    {
+      "selector": ".template-objects-and-hands .template-link[data-first]",
+      "foreground": "#fff8ec",
+      "background": "#4a3022",
+      "ratio": 11.45
+    },
+    {
+      "selector": ".template-distance-club",
+      "foreground": "#123caa",
+      "background": "#f6f7ee",
+      "ratio": 8.64
+    },
+    {
+      "selector": ".club-poster",
+      "foreground": "#fff",
+      "background": "#123caa",
+      "ratio": 9.32
+    },
+    {
+      "selector": ".template-distance-club .template-link:nth-child(even)",
+      "foreground": "#152542",
+      "background": "#e3f448",
+      "ratio": 12.58
+    },
+    {
+      "selector": ".template-screening-room",
+      "foreground": "#f5b7c5",
+      "background": "#250e14",
+      "ratio": 10.82
+    },
+    {
+      "selector": ".template-screening-room .template-link[data-first]",
+      "foreground": "#250e14",
+      "background": "#f5b7c5",
+      "ratio": 10.82
+    },
+    {
+      "selector": ".template-type-practice",
+      "foreground": "#111",
+      "background": "#fffef8",
+      "ratio": 18.69
+    },
+    {
+      "selector": ".template-type-practice .template-link[data-first]",
+      "foreground": "#fffef8",
+      "background": "#111",
+      "ratio": 18.69
+    },
+    {
+      "selector": ".template-soft-power",
+      "foreground": "#482044",
+      "background": "#dbcee9",
+      "ratio": 8.95
+    },
+    {
+      "selector": ".template-soft-power .template-link[data-first]",
+      "foreground": "#f6eefa",
+      "background": "#482044",
+      "ratio": 11.83
+    },
+    {
+      "selector": ".template-culture-receipt",
+      "foreground": "#16160f",
+      "background": "#eee941",
+      "ratio": 14.16
+    },
+    {
+      "selector": ".template-culture-receipt .template-arrow",
+      "foreground": "#fffce8",
+      "background": "#16160f",
+      "ratio": 17.6
+    },
+    {
+      "selector": ".template-coastal-assembly",
+      "foreground": "#0e3546",
+      "background": "#e2efdf",
+      "ratio": 10.92
+    },
+    {
+      "selector": ".template-coastal-assembly .template-link",
+      "foreground": "#f4f9ef",
+      "background": "#164659",
+      "ratio": 9.56
+    },
+    {
+      "selector": ".template-coastal-assembly .template-link:nth-child(3n + 2)",
+      "foreground": "#163746",
+      "background": "#f5a16b",
+      "ratio": 6.11
+    },
+    {
+      "selector": ".template-coastal-assembly .template-link:nth-child(3n)",
+      "foreground": "#143b46",
+      "background": "#bcd8c8",
+      "ratio": 7.91
+    }
+  ]
+}

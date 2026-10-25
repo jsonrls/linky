@@ -1,0 +1,75 @@
+--- src/styles/workspace.css (before)
++++ src/styles/workspace.css (after)
+@@ -220,6 +220,56 @@
+ .desk-published-document > .public-surface {
+   border-radius: 12px;
+ }
++.desk-published-document
++  > .public-surface[data-template="original"]
++  .public-profile {
++  padding: 40px 24px 32px;
++}
++.desk-published-document > .public-surface[data-template="original"] header,
++.desk-published-document
++  > .public-surface[data-template="original"]
++  .public-footnote {
++  text-align: center;
++}
++.desk-published-document
++  > .public-surface[data-template="original"]
++  :is(.original-avatar, .initials) {
++  width: 96px;
++  height: 96px;
++  margin: 0 auto 24px;
++}
++.desk-published-document
++  > .public-surface[data-template="original"]
++  .public-name {
++  font-size: 1.75rem;
++}
++.desk-published-document
++  > .public-surface[data-template="original"]
++  .public-link {
++  flex-direction: column;
++  color: var(--page-ink);
++  background: var(--page-bg);
++  border-color: var(--page-input);
++}
++.desk-published-document
++  > .public-surface[data-template="original"]
++  .template-link-body {
++  display: grid;
++  grid-template-columns: 22px minmax(0, 1fr) 22px;
++  text-align: center;
++}
++.desk-published-document
++  > .public-surface[data-template="original"]
++  .template-link-image {
++  width: 100%;
++  height: auto;
++  aspect-ratio: 16 / 9;
++}
++.desk-published-document
++  > .public-surface[data-template="original"]
++  .public-text {
++  text-align: left;
++}
+ .desk-preview-state {
+   min-height: 300px;
+   padding: 48px 0;
+@@ -430,3 +480,15 @@
+     margin: 0;
+   }
+ }
++@media (max-width: 390px) {
++  .desk-published-document
++    > .public-surface[data-template="original"]
++    .public-profile {
++    padding-inline: 16px;
++  }
++  .desk-published-document
++    > .public-surface[data-template="original"]
++    .template-link-body {
++    gap: 8px;
++  }
++}

@@ -1,0 +1,72 @@
+[
+  {
+    "element": "P",
+    "class": "eyebrow",
+    "color": "rgb(29, 78, 216)",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(29, 78, 216)",
+    "focus": "#2563eb",
+    "textContrast": 6.7,
+    "borderContrast": 6.7
+  },
+  {
+    "element": "H1",
+    "class": "",
+    "color": "rgb(15, 23, 42)",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(15, 23, 42)",
+    "focus": "#2563eb",
+    "textContrast": 17.85,
+    "borderContrast": 17.85
+  },
+  {
+    "element": "P",
+    "class": "muted",
+    "color": "rgb(71, 85, 105)",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(71, 85, 105)",
+    "focus": "#2563eb",
+    "textContrast": 7.58,
+    "borderContrast": 7.58
+  },
+  {
+    "element": "LABEL",
+    "class": "",
+    "color": "rgb(15, 23, 42)",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(15, 23, 42)",
+    "focus": "#2563eb",
+    "textContrast": 17.85,
+    "borderContrast": 17.85
+  },
+  {
+    "element": "INPUT",
+    "class": "",
+    "color": "rgb(15, 23, 42)",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(100, 116, 139)",
+    "focus": "#2563eb",
+    "textContrast": 17.85,
+    "borderContrast": 4.76
+  },
+  {
+    "element": "BUTTON",
+    "class": "primary auth-submit",
+    "color": "rgb(255, 255, 255)",
+    "background": "rgb(29, 78, 216)",
+    "border": "rgb(29, 78, 216)",
+    "focus": "#2563eb",
+    "textContrast": 6.7,
+    "borderContrast": 1
+  },
+  {
+    "element": "P",
+    "class": "small muted auth-note",
+    "color": "rgb(71, 85, 105)",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(71, 85, 105)",
+    "focus": "#2563eb",
+    "textContrast": 7.58,
+    "borderContrast": 7.58
+  }
+]

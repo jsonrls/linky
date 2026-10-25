@@ -1,0 +1,432 @@
+/* Owner chrome is scoped away from every public/editor/picker document. */
+body:has(> .workspace-ui) {
+  background: #fff;
+}
+.workspace-ui {
+  min-height: 100dvh;
+  background: #fff;
+}
+.workspace-ui .shell,
+.workspace-ui .editor-shell {
+  max-width: 1440px;
+  padding-inline: 48px;
+}
+:where(.workspace-ui) :is(h1, h2, h3):not(:where(.public-surface *)) {
+  font-weight: 750;
+}
+:where(.workspace-ui, .workspace-dialog)
+  :is(button, .button, input, select, textarea):not(:where(.public-surface *)) {
+  border-radius: 10px;
+}
+:where(.workspace-ui, .workspace-dialog)
+  :is(button, .button).primary:not(:where(.public-surface *)) {
+  border-radius: 12px;
+}
+.workspace-ui button[aria-pressed="true"]:not(.public-surface *) {
+  font-weight: 750;
+}
+.owner-header {
+  border-bottom: 1px solid #e2e8f0;
+}
+.workspace-ui .masthead {
+  min-height: 72px;
+  padding-block: 0;
+  border: 0;
+  justify-content: start;
+  gap: 32px;
+}
+.workspace-ui .wordmark {
+  font-size: 1.75rem;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+}
+.owner-header nav {
+  align-self: stretch;
+  display: flex;
+  padding-left: 32px;
+  position: relative;
+}
+.owner-header nav::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 24px;
+  height: 24px;
+  border-left: 1px solid var(--divider);
+}
+.owner-profiles {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 3px solid var(--accent);
+  text-decoration: none;
+  font-weight: 650;
+}
+.workspace-ui .account-label {
+  margin-left: auto;
+  min-width: 0;
+  max-width: min(50%, 520px);
+  flex-direction: row;
+  gap: 16px;
+  text-align: left;
+}
+.workspace-ui .account-label > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.workspace-ui .account-label > div {
+  flex: none;
+}
+.workspace-ui .account-label button {
+  white-space: nowrap;
+  padding-inline: 20px;
+}
+.workspace-ui .account-label [role="alert"] {
+  max-width: 200px;
+  white-space: normal;
+  color: var(--error);
+}
+.profile-desk {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(380px, 1fr);
+  align-items: start;
+  gap: 32px;
+  padding-block: 44px 48px;
+}
+.desk-index {
+  min-width: 0;
+}
+.profile-desk .page-intro {
+  padding: 8px 0 36px;
+  align-items: start;
+  gap: 20px;
+}
+.profile-desk h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+.profile-desk .page-intro > div:first-child > p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+.desk-create {
+  flex: none;
+  text-align: right;
+}
+.profile-desk .desk-create .primary {
+  border-radius: 999px;
+  padding: 14px 24px;
+}
+.profile-desk .desk-create .usage {
+  font-size: 0.875rem;
+  margin: 12px 0 0;
+}
+.profile-desk .search-tools {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  padding-bottom: 12px;
+}
+.profile-desk .search-field label {
+  font-weight: 600;
+}
+.profile-desk .filters button {
+  border-radius: 0;
+}
+.profile-desk .list-caption {
+  padding: 16px 0 8px;
+}
+.profile-desk .profile-row {
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px 16px;
+  padding: 20px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.profile-desk .profile-row.is-selected {
+  background: #eff6ff;
+  border-radius: 16px;
+  border-color: transparent;
+}
+.profile-desk .profile-row .initials {
+  height: 64px;
+  background: #e2e8f0;
+  font-weight: 650;
+}
+.profile-desk .profile-row.is-selected > .initials {
+  background: #dbeafe;
+}
+.profile-desk .profile-row h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.profile-desk .profile-row .profile-status {
+  margin-top: 8px;
+}
+.profile-desk .profile-row .small.muted {
+  margin-top: 4px;
+}
+.profile-desk .profile-row .actions {
+  grid-column: 2;
+  width: auto;
+  margin: 0;
+}
+.profile-desk .profile-row .actions .button:first-child {
+  flex: none;
+}
+.profile-desk .profile-row button[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #fff;
+}
+.profile-desk .page-footer {
+  padding-block: 24px;
+}
+.desk-preview {
+  min-width: 0;
+  border-radius: 20px;
+  background: #eff6ff;
+  padding: 28px 24px;
+}
+.desk-preview > h2 {
+  font-size: 1.625rem;
+  letter-spacing: -0.035em;
+}
+.desk-preview-help {
+  color: var(--secondary);
+  margin-top: 8px;
+}
+.desk-preview-owner {
+  font-size: 0.875rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  margin-top: 20px;
+}
+.desk-preview-owner span {
+  display: block;
+  color: var(--secondary);
+  font-weight: 400;
+}
+.desk-private-note {
+  color: var(--secondary);
+  font-size: 0.875rem;
+  margin-top: 12px;
+}
+.desk-published-document {
+  margin-top: 24px;
+}
+.desk-published-document > .public-surface {
+  border-radius: 12px;
+}
+.desk-preview-state {
+  min-height: 300px;
+  padding: 48px 0;
+}
+.desk-preview-state h3 {
+  font-size: 1.25rem;
+}
+.desk-preview-state p {
+  color: var(--secondary);
+  margin-block: 12px 24px;
+}
+.desk-mobile-preview {
+  display: none;
+}
+.workspace-dialog {
+  border-color: var(--divider);
+  border-radius: 20px;
+  padding: 24px;
+}
+.workspace-dialog .dialog-header h2 {
+  font-size: 1.5rem;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+}
+.workspace-dialog .dialog-header > button {
+  min-width: 44px;
+  padding-inline: 12px;
+}
+.workspace-dialog .dialog-actions {
+  padding-top: 16px;
+  border-top: 1px solid var(--divider);
+}
+.desk-preview-dialog {
+  background: #eff6ff;
+}
+.workspace-ui.auth-shell {
+  max-width: 452px;
+  padding: 32px 16px 48px;
+}
+.workspace-ui.auth-shell .wordmark {
+  margin-bottom: 64px;
+}
+.workspace-ui.auth-shell h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+}
+.workspace-ui.auth-shell .eyebrow {
+  color: var(--accent);
+  font-weight: 650;
+}
+.workspace-recovery {
+  padding-block: 24px;
+}
+.workspace-ui .editor-header .back-link {
+  font-weight: 600;
+}
+.workspace-ui .editor-shell .content-toolbar {
+  background: #fff;
+}
+.workspace-ui .editor-shell .tabs button[aria-pressed="true"] {
+  background: #eff6ff;
+  color: var(--accent);
+  border-radius: 10px 10px 0 0;
+}
+.workspace-ui .editor-shell .mobile-view-tabs button[aria-pressed="true"] {
+  background: #eff6ff;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.workspace-ui .editor-shell .preview-pane {
+  background: #eff6ff;
+}
+@media (min-width: 1350px) {
+  .profile-desk .search-tools {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 16px;
+  }
+  .profile-desk .filters button {
+    padding-inline: 10px;
+  }
+}
+@media (min-width: 1280px) {
+  .profile-desk .profile-row {
+    grid-template-columns: 56px minmax(0, 1fr) 228px;
+  }
+  .profile-desk .profile-row .actions {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    justify-content: end;
+  }
+  .profile-desk .profile-row .actions > form {
+    flex-basis: 100%;
+    text-align: right;
+  }
+}
+@media (max-width: 1099px) {
+  .profile-desk {
+    display: block;
+  }
+  .desk-preview {
+    display: none;
+  }
+  .desk-mobile-preview {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+    padding-top: 16px;
+  }
+  .desk-preview-dialog {
+    width: min(560px, 100%);
+    max-height: 100dvh;
+  }
+}
+@media (max-width: 699px) {
+  .workspace-ui .shell,
+  .workspace-ui .editor-shell {
+    padding-inline: 16px;
+  }
+  .workspace-ui .masthead {
+    min-height: 72px;
+    gap: 20px;
+  }
+  .owner-header nav {
+    padding-left: 0;
+  }
+  .owner-header nav::before {
+    content: none;
+  }
+  .workspace-ui .account-label {
+    gap: 8px;
+    flex: 1;
+    justify-content: end;
+  }
+  .workspace-ui .account-label button {
+    padding-inline: 12px;
+  }
+  .profile-desk {
+    padding-block: 28px;
+  }
+  .profile-desk .page-intro {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 0 24px;
+  }
+  .profile-desk h1 {
+    font-size: 2rem;
+  }
+  .profile-desk .page-intro > div:first-child > p {
+    font-size: 1rem;
+  }
+  .desk-create {
+    text-align: left;
+  }
+  .profile-desk .desk-create .primary {
+    padding-block: 12px;
+  }
+  .profile-desk .profile-row {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+  .profile-desk .profile-row .actions {
+    grid-column: 1 / -1;
+  }
+  .profile-desk .profile-row h2 {
+    font-size: 1.125rem;
+  }
+  .profile-desk .list-caption > span:last-child {
+    flex-basis: 100%;
+  }
+  .workspace-ui.auth-shell h1 {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 479px) {
+  .workspace-ui .masthead {
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-block: 8px;
+    min-height: 72px;
+  }
+  .workspace-ui .wordmark {
+    font-size: 1.5rem;
+  }
+  .workspace-ui .account-label {
+    max-width: 45%;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .workspace-ui .account-label > span {
+    flex-basis: 100%;
+    text-align: right;
+  }
+  .workspace-dialog {
+    padding: 20px 16px max(32px, env(safe-area-inset-bottom));
+    border-radius: 0;
+  }
+  .profile-desk .search-field .actions {
+    flex-wrap: wrap;
+  }
+  .profile-desk .search-field input {
+    flex-basis: 100%;
+  }
+  .desk-preview-dialog {
+    height: 100dvh;
+    margin: 0;
+  }
+}

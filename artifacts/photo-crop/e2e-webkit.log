@@ -1,0 +1,18 @@
+
+Running 10 tests using 1 worker
+
+(node:55249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [webkit] › tests/e2e/photo-crop.spec.ts:111:5 › cancel, Escape and close send no upload; reset, arrows, buttons and captured drag clamp the local crop (7.3s)
+  ✓   2 [webkit] › tests/e2e/photo-crop.spec.ts:271:5 › preparation, stale decode cancellation, decode error, choose another and size errors keep local state disposable (2.2s)
+  ✓   3 [webkit] › tests/e2e/photo-crop.spec.ts:404:7 › original EXIF 2 bytes and cropped browser preview match server output (2.7s)
+  ✓   4 [webkit] › tests/e2e/photo-crop.spec.ts:404:7 › original EXIF 6 bytes and cropped browser preview match server output (2.9s)
+  ✓   5 [webkit] › tests/e2e/photo-crop.spec.ts:404:7 › original EXIF 7 bytes and cropped browser preview match server output (2.7s)
+  ✓   6 [webkit] › tests/e2e/photo-crop.spec.ts:579:5 › known autosave session expiry keeps crop open with disabled confirmation and no photo POST (2.7s)
+  ✓   7 [webkit] › tests/e2e/photo-upload.spec.ts:86:5 › device photo stays private until published, replacement preserves old snapshot, republish and unpublish revoke access (7.5s)
+  -   8 [webkit] › tests/e2e/photo-upload.spec.ts:200:5 › upload allows concurrent editing across tabs, blocks publication until save and keeps previous photo after failure
+  -   9 [webkit] › tests/e2e/photo-upload.spec.ts:346:5 › expired upload uses existing sign-in recovery and an unmounted editor ignores a late upload
+  -  10 [webkit] › tests/e2e/photo-upload.spec.ts:445:5 › upload rejects unauthenticated, wrong origin/host, oversized, unsupported and malformed requests
+
+  3 skipped
+  7 passed (31.1s)

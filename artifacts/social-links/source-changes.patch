@@ -1,0 +1,855 @@
+--- a/package.json
++++ b/package.json
+@@ -27,6 +27,7 @@
+     "next": "16.4.2",
+     "react": "19.3.1",
+     "react-dom": "19.3.1",
++    "react-icons": "5.7.0",
+     "zod": "4.6.7"
+   },
+   "devDependencies": {
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -13,7 +13,8 @@
+         "next": "16.4.2",
+         "react": "19.3.1",
+         "react-dom": "19.3.1",
+-        "zod": "4.6.7"
++        "zod": "4.6.7",
++        "react-icons": "5.7.0"
+       },
+       "devDependencies": {
+         "@playwright/test": "1.64.1",
+@@ -6229,6 +6230,15 @@
+         "react": "^19.3.1"
+       }
+     },
++    "node_modules/react-icons": {
++      "version": "5.7.0",
++      "resolved": "https://registry.npmjs.org/react-icons/-/react-icons-5.7.0.tgz",
++      "integrity": "sha512-LBLy340Rzqy6+/yVhZKT3B/QpP1BZaesGqasf09HPOBzRarcDIFH0WwXlXQfE7q7ipxK4MSiC5DIBWURCny6fw==",
++      "license": "MIT",
++      "peerDependencies": {
++        "react": "*"
++      }
++    },
+     "node_modules/react-is": {
+       "version": "16.13.1",
+       "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+--- /dev/null
++++ b/src/features/profiles/link-platforms.tsx
+@@ -0,0 +1,82 @@
++import {
++  FaBehance,
++  FaBluesky,
++  FaDiscord,
++  FaDribbble,
++  FaFacebook,
++  FaFacebookMessenger,
++  FaGithub,
++  FaInstagram,
++  FaLine,
++  FaLink,
++  FaLinkedin,
++  FaMastodon,
++  FaMedium,
++  FaPatreon,
++  FaPinterest,
++  FaReddit,
++  FaSignalMessenger,
++  FaSnapchat,
++  FaSoundcloud,
++  FaSpotify,
++  FaTelegram,
++  FaThreads,
++  FaTiktok,
++  FaTumblr,
++  FaTwitch,
++  FaVimeo,
++  FaWhatsapp,
++  FaXTwitter,
++  FaYoutube,
++} from "react-icons/fa6";
++import { SiKick, SiSubstack } from "react-icons/si";
++
++// Exact labels are the persisted contract; custom labels are never normalized.
++export const linkPlatforms = [
++  { label: "Behance", Icon: FaBehance },
++  { label: "Bluesky", Icon: FaBluesky },
++  { label: "Discord", Icon: FaDiscord },
++  { label: "Dribbble", Icon: FaDribbble },
++  { label: "Facebook", Icon: FaFacebook },
++  { label: "GitHub", Icon: FaGithub },
++  { label: "Instagram", Icon: FaInstagram },
++  { label: "Kick", Icon: SiKick },
++  { label: "LINE", Icon: FaLine },
++  { label: "LinkedIn", Icon: FaLinkedin },
++  { label: "Mastodon", Icon: FaMastodon },
++  { label: "Medium", Icon: FaMedium },
++  { label: "Messenger", Icon: FaFacebookMessenger },
++  { label: "Patreon", Icon: FaPatreon },
++  { label: "Pinterest", Icon: FaPinterest },
++  { label: "Reddit", Icon: FaReddit },
++  { label: "Signal", Icon: FaSignalMessenger },
++  { label: "Snapchat", Icon: FaSnapchat },
++  { label: "SoundCloud", Icon: FaSoundcloud },
++  { label: "Spotify", Icon: FaSpotify },
++  { label: "Substack", Icon: SiSubstack },
++  { label: "Telegram", Icon: FaTelegram },
++  { label: "Threads", Icon: FaThreads },
++  { label: "TikTok", Icon: FaTiktok },
++  { label: "Tumblr", Icon: FaTumblr },
++  { label: "Twitch", Icon: FaTwitch },
++  { label: "Vimeo", Icon: FaVimeo },
++  { label: "WhatsApp", Icon: FaWhatsapp },
++  { label: "X", Icon: FaXTwitter },
++  { label: "YouTube", Icon: FaYoutube },
++] as const;
++
++export function linkPlatform(label: string) {
++  return linkPlatforms.find((platform) => platform.label === label);
++}
++
++export function LinkIcon({ label }: { label: string }) {
++  const Icon = linkPlatform(label)?.Icon ?? FaLink;
++  return (
++    <Icon
++      className="link-icon"
++      size={22}
++      aria-hidden="true"
++      focusable="false"
++    />
++  );
++}
+--- /dev/null
++++ b/src/features/profiles/link-platforms.test.ts
+@@ -0,0 +1,87 @@
++import { createElement } from "react";
++import { renderToStaticMarkup } from "react-dom/server";
++import { describe, expect, it } from "vitest";
++import { FaLink } from "react-icons/fa6";
++import { LinkIcon, linkPlatform, linkPlatforms } from "./link-platforms";
++import { ProfileRenderer } from "@/features/public-profile/ProfileRenderer";
++import type { ProfileDocument } from "./model";
++
++describe("link icons", () => {
++  it("renders every curated packaged mark as a decorative SVG", () => {
++    expect(linkPlatforms).toHaveLength(30);
++    const labels = linkPlatforms.map(({ label }) => label);
++    expect(labels).toEqual([...labels].sort((a, b) => a.localeCompare(b)));
++    const generic = renderToStaticMarkup(createElement(FaLink));
++    for (const { label, Icon } of linkPlatforms) {
++      const svg = renderToStaticMarkup(createElement(LinkIcon, { label }));
++      expect(svg).toContain('aria-hidden="true"');
++      expect(svg).toContain('focusable="false"');
++      expect(svg).toContain('width="22"');
++      expect(svg).toContain("<path");
++      expect(renderToStaticMarkup(createElement(Icon))).not.toBe(generic);
++    }
++  });
++
++  it.each([
++    "",
++    "github",
++    " GitHub",
++    "GitHub ",
++    "Twitter",
++    "Selected work",
++    "toString",
++  ])("preserves arbitrary label %j and uses a generic icon", (label) => {
++    expect(linkPlatform(label)).toBeUndefined();
++    expect(renderToStaticMarkup(createElement(LinkIcon, { label }))).toBe(
++      renderToStaticMarkup(createElement(LinkIcon, { label: "Custom" })),
++    );
++  });
++
++  it("shares marks between preview and public output, excluding hidden blocks", () => {
++    const document: ProfileDocument = {
++      schemaVersion: 1,
++      name: "Icon fixture",
++      bio: "",
++      appearance: { theme: "warm", layout: "editorial", shape: "soft" },
++      blocks: [
++        {
++          id: "brand",
++          type: "link",
++          visible: true,
++          label: "GitHub",
++          url: "https://example.com/work",
++        },
++        {
++          id: "custom",
++          type: "link",
++          visible: true,
++          label: "Selected work",
++          url: "https://example.com/custom",
++        },
++        {
++          id: "hidden",
++          type: "link",
++          visible: false,
++          label: "Hidden brand",
++          url: "https://example.com/hidden",
++        },
++      ],
++    };
++    const preview = renderToStaticMarkup(
++      createElement(ProfileRenderer, { document, preview: true }),
++    );
++    const live = renderToStaticMarkup(
++      createElement(ProfileRenderer, { document }),
++    );
++    const icons = (html: string) => html.match(/<svg.*?<\/svg>/g);
++    expect(icons(live)).toEqual(icons(preview));
++    expect(icons(live)).toHaveLength(2);
++    expect(live).toContain('href="https://example.com/work"');
++    expect(preview).not.toContain("href=");
++    expect(preview).toContain('aria-disabled="true"');
++    expect(preview).toContain('tabindex="-1"');
++    expect(live).toContain('class="link-label">Selected work');
++    expect(live).not.toContain("Hidden brand");
++    expect(live).not.toContain("link-number");
++  });
++});
+--- /dev/null
++++ b/src/features/editor/LinkLabelField.tsx
+@@ -0,0 +1,78 @@
++import { Field } from "@/components/Field";
++import {
++  linkPlatform,
++  linkPlatforms,
++} from "@/features/profiles/link-platforms";
++
++export type LinkLabelChoice = { selection: string; customLabel: string };
++
++export function choiceForLabel(label: string): LinkLabelChoice {
++  return {
++    selection: linkPlatform(label)?.label ?? "custom",
++    customLabel: linkPlatform(label) ? "" : label,
++  };
++}
++
++export function LinkLabelField({
++  id,
++  choice,
++  error,
++  onChange,
++}: {
++  id: string;
++  choice: LinkLabelChoice;
++  error?: string;
++  onChange: (choice: LinkLabelChoice, label: string) => void;
++}) {
++  const custom = choice.selection === "custom";
++  const selectId = custom ? `platform-${id}` : `label-${id}`;
++  return (
++    <>
++      <div className="field">
++        <label htmlFor={selectId}>Link label</label>
++        <select
++          id={selectId}
++          value={choice.selection}
++          aria-invalid={!custom && !!error}
++          aria-describedby={!custom && error ? `${selectId}-error` : undefined}
++          onChange={(event) => {
++            const selection = event.target.value;
++            onChange(
++              { ...choice, selection },
++              selection === "custom" ? choice.customLabel : selection,
++            );
++          }}
++        >
++          <option value="" disabled>
++            Choose a platform
++          </option>
++          {linkPlatforms.map(({ label }) => (
++            <option key={label} value={label}>
++              {label}
++            </option>
++          ))}
++          <option value="custom">Custom</option>
++        </select>
++        {!custom && error && (
++          <span id={`${selectId}-error`} className="field-error" role="alert">
++            Choose a platform or Custom for this visible link.
++          </span>
++        )}
++      </div>
++      {custom && (
++        <Field
++          id={`label-${id}`}
++          label="Custom label"
++          value={choice.customLabel}
++          maxLength={120}
++          error={error}
++          hint="Up to 120 characters"
++          onChange={(event) => {
++            const customLabel = event.target.value;
++            onChange({ selection: "custom", customLabel }, customLabel);
++          }}
++        />
++      )}
++    </>
++  );
++}
+--- a/src/features/editor/Editor.tsx
++++ b/src/features/editor/Editor.tsx
+@@ -5,6 +5,7 @@
+ import { CopyWork } from "@/components/CopyWork";
+ import { OtpForm } from "@/features/auth/OtpForm";
+ import { ProfileRenderer } from "@/features/public-profile/ProfileRenderer";
++import { LinkIcon } from "@/features/profiles/link-platforms";
+ import { api, RequestError, unresolvedRequest } from "@/lib/client-api";
+ import {
+   publicationIssue,
+@@ -15,6 +16,11 @@
+   type EditableProfile,
+ } from "@/features/profiles/model";
+ import { useDraft } from "./useDraft";
++import {
++  choiceForLabel,
++  LinkLabelField,
++  type LinkLabelChoice,
++} from "./LinkLabelField";
+ type Mutation = {
+   kind: "publish" | "unpublish";
+   operationId: string;
+@@ -58,6 +64,9 @@
+   const [undo, setUndo] = useState<{ block: Block; index: number } | null>(
+     null,
+   );
++  const [linkChoices, setLinkChoices] = useState<
++    Record<string, LinkLabelChoice>
++  >({});
+   const publicUrl =
+     typeof window === "undefined"
+       ? `/@${profile.handle}`
+@@ -92,9 +101,16 @@
+         ? { id: crypto.randomUUID(), type, visible: true, label: "", url: "" }
+         : { id: crypto.randomUUID(), type, visible: true, text: "" };
+     documentChange({ blocks: [...value.document.blocks, block] });
++    if (type === "link")
++      setLinkChoices((choices) => ({
++        ...choices,
++        [block.id]: { selection: "", customLabel: "" },
++      }));
+     setMessage(`${type === "link" ? "Link" : "Text"} added at the end.`);
+     requestAnimationFrame(() =>
+-      document.getElementById(`block-${block.id}`)?.focus(),
++      document
++        .getElementById(`${type === "link" ? "label" : "block"}-${block.id}`)
++        ?.focus(),
+     );
+   }
+   function move(index: number, direction: number) {
+@@ -199,11 +215,17 @@
+       setBusy(false);
+     }
+   }
++  function reloadDraft(latest: Profile) {
++    // Discard UI-only custom text with the local draft, never on autosave receipts.
++    setLinkChoices({});
++    setUndo(null);
++    draft.reload(latest);
++  }
+   async function reload() {
+     setBusy(true);
+     try {
+       const latest = await api<Profile>(`/api/profiles/${profile.id}`);
+-      draft.reload(latest);
++      reloadDraft(latest);
+       if (!operation.current) {
+         setUncertain(false);
+         setOperationError("");
+@@ -502,6 +524,9 @@
+                               {String(index + 1).padStart(2, "0")} /{" "}
+                               {block.type === "link" ? "Link" : "Text"}
+                             </span>
++                            {block.type === "link" && (
++                              <LinkIcon label={block.label} />
++                            )}
+                             <strong>
+                               {block.type === "link"
+                                 ? block.label || "Untitled link"
+@@ -514,22 +539,26 @@
+                           <div className="block-body">
+                             {block.type === "link" ? (
+                               <>
+-                                <Field
+-                                  id={`label-${block.id}`}
++                                <LinkLabelField
++                                  id={block.id}
+                                   error={
+                                     invalidField?.field === `label-${block.id}`
+                                       ? invalidField.message
+                                       : undefined
+                                   }
+-                                  label="Link label"
+-                                  value={block.label}
+-                                  maxLength={120}
+-                                  onChange={(e) =>
++                                  choice={
++                                    linkChoices[block.id] ??
++                                    choiceForLabel(block.label)
++                                  }
++                                  onChange={(choice, label) => {
++                                    setLinkChoices((choices) => ({
++                                      ...choices,
++                                      [block.id]: choice,
++                                    }));
+                                     updateBlock(block.id, {
+-                                      label: e.target.value,
+-                                    })
+-                                  }
+-                                  hint="Up to 120 characters"
++                                      label,
++                                    });
++                                  }}
+                                 />
+                                 <Field
+                                   id={`url-${block.id}`}
+@@ -852,7 +881,7 @@
+                 </button>
+                 <button
+                   onClick={() => {
+-                    draft.reload(profile);
++                    reloadDraft(profile);
+                     window.location.assign(navigation.current);
+                   }}
+                 >
+--- a/src/features/public-profile/ProfileRenderer.tsx
++++ b/src/features/public-profile/ProfileRenderer.tsx
+@@ -1,4 +1,5 @@
+ import { initials, type ProfileDocument } from "@/features/profiles/model";
++import { LinkIcon } from "@/features/profiles/link-platforms";
+ export function ProfileRenderer({
+   document,
+   preview = false,
+@@ -6,7 +7,6 @@
+   document: ProfileDocument;
+   preview?: boolean;
+ }) {
+-  let link = 0;
+   const blocks = document.blocks.filter((block) => block.visible);
+   const Heading = preview ? "h2" : "h1";
+   return (
+@@ -37,9 +37,7 @@
+                 aria-disabled={preview || undefined}
+                 tabIndex={preview ? -1 : undefined}
+               >
+-                <span className="link-number" aria-hidden="true">
+-                  {String(++link).padStart(2, "0")}
+-                </span>
++                <LinkIcon label={block.label} />
+                 <span className="link-label">
+                   {block.label || "Untitled link"}
+                 </span>
+--- a/src/styles/global.css
++++ b/src/styles/global.css
+@@ -757,10 +757,10 @@
+   border-color: var(--page-accent);
+   color: var(--page-accent);
+ }
+-.public-link .link-number {
+-  font-family: var(--font-sans);
+-  font-weight: 400;
+-  color: var(--page-secondary);
++.link-icon {
++  flex: none;
++  width: 22px;
++  height: 22px;
+ }
+ .public-link .link-mark {
+   font-size: 1.25rem;
+@@ -770,9 +770,6 @@
+   background: var(--page-accent);
+   color: var(--page-bg);
+   border-color: var(--page-accent);
+-}
+-.public-link:first-child .link-number {
+-  color: inherit;
+ }
+ .public-link:first-child:hover,
+ .public-link:first-child:active {
+--- a/tests/e2e/helpers.ts
++++ b/tests/e2e/helpers.ts
+@@ -105,7 +105,8 @@
+ }
+ export async function addLink(page: Page) {
+   await page.getByRole("button", { name: "Add link", exact: true }).click();
+-  await page.getByLabel("Link label").fill("Selected work");
++  await page.getByLabel("Link label", { exact: true }).selectOption("custom");
++  await page.getByLabel("Custom label", { exact: true }).fill("Selected work");
+   await page.getByLabel("Destination URL").fill("https://example.com/work");
+   await saved(page);
+ }
+--- a/tests/e2e/interactions.spec.ts
++++ b/tests/e2e/interactions.spec.ts
+@@ -16,7 +16,8 @@
+     await page.setViewportSize({ width: 390, height: 844 });
+     await createProfile(page);
+     await page.getByRole("button", { name: "Add link", exact: true }).click();
+-    await page.getByLabel("Link label").fill("Example");
++    await page.getByLabel("Link label", { exact: true }).selectOption("custom");
++    await page.getByLabel("Custom label", { exact: true }).fill("Example");
+     await page.getByLabel("Destination URL").fill("https://example.com:99999/");
+     await saved(page);
+     await page.locator("summary").click();
+@@ -49,7 +50,7 @@
+         .filter({ hasText: "restored at position 1 of 1" }),
+     ).toBeVisible();
+     await page.getByRole("button", { name: "Appearance", exact: true }).click();
+-    for (const name of [/Evening ink/, /Concise/, /Square/]) {
++    for (const name of [/Midnight navy/, /Concise/, /Square/]) {
+       const radio = page.getByRole("radio", { name });
+       await radio.focus();
+       await page.keyboard.press("Space");
+@@ -59,7 +60,7 @@
+     await page.reload();
+     await expect(page.getByLabel("Bio")).toBeEnabled();
+     await page.getByRole("button", { name: "Appearance", exact: true }).click();
+-    for (const name of [/Evening ink/, /Concise/, /Square/])
++    for (const name of [/Midnight navy/, /Concise/, /Square/])
+       await expect(page.getByRole("radio", { name })).toBeChecked();
+   } finally {
+     await removeOwner(email);
+--- /dev/null
++++ b/tests/e2e/social-links.spec.ts
+@@ -0,0 +1,325 @@
++import { test, expect, type Page } from "@playwright/test";
++import { mkdir } from "node:fs/promises";
++import {
++  sessionOwner,
++  createProfile,
++  addLink,
++  saved,
++  publish,
++  removeOwner,
++} from "./helpers";
++
++test.beforeEach(({}, info) =>
++  test.skip(
++    info.project.name !== "chromium",
++    "Focused social link coverage runs in Chromium.",
++  ),
++);
++
++async function attemptPublish(page: Page) {
++  await saved(page);
++  await page.getByRole("button", { name: "Publish", exact: true }).click();
++  await page
++    .getByRole("button", { name: "Publish snapshot", exact: true })
++    .click();
++  await expect(page.getByRole("dialog")).not.toBeVisible();
++}
++
++test("platforms and existing custom links save, reload and publish matching local SVGs", async ({
++  page,
++  browser,
++}) => {
++  const email = await sessionOwner(page);
++  const visitor = await browser.newContext({
++    viewport: { width: 390, height: 844 },
++  });
++  try {
++    await page.setViewportSize({ width: 1440, height: 1000 });
++    const profile = await createProfile(page, "social");
++    await page
++      .getByLabel("Public display name")
++      .fill("Social links test profile");
++    await addLink(page);
++    await page.reload();
++    const first = page.locator(".block").first();
++    const select = first.getByLabel("Link label", { exact: true });
++    await expect(select).toBeVisible();
++    await expect(select).toBeEnabled();
++    await expect(select).toHaveValue("custom");
++    await expect(first.getByLabel("Custom label", { exact: true })).toHaveValue(
++      "Selected work",
++    );
++    const options = await select.locator("option").allTextContents();
++    expect(options[0].trim()).toBe("Choose a platform");
++    expect(options.at(-1)).toBe("Custom");
++    const platforms = options.slice(1, -1).map((label) => label.trim());
++    expect(platforms).toHaveLength(30);
++    expect(platforms).toEqual(
++      [...platforms].sort((a, b) => a.localeCompare(b)),
++    );
++    for (const label of platforms) {
++      await select.selectOption(label);
++      await expect(first.getByLabel("Destination URL")).toHaveValue(
++        "https://example.com/work",
++      );
++      await expect(first.locator("summary svg")).toHaveCount(1);
++    }
++    await select.selectOption("GitHub");
++    await saved(page);
++    await page.reload();
++    await expect(
++      page.getByRole("heading", { name: /Content blocks$/ }),
++    ).toBeVisible();
++    await expect(select).toBeVisible();
++    await expect(select).toHaveValue("GitHub");
++    await expect(first.getByLabel("Custom label", { exact: true })).toHaveCount(
++      0,
++    );
++    await mkdir("artifacts/social-links", { recursive: true });
++    await page.screenshot({
++      path: "artifacts/social-links/editor-platforms.png",
++      fullPage: true,
++    });
++
++    await page.getByRole("button", { name: "Add link", exact: true }).click();
++    const custom = page.locator(".block").nth(1);
++    const customSelect = custom.getByLabel("Link label", { exact: true });
++    await expect(customSelect).toBeFocused();
++    await expect(customSelect).toHaveValue("");
++    await customSelect.selectOption("custom");
++    const customLabel = custom.getByLabel("Custom label", { exact: true });
++    await expect(customLabel).toHaveAttribute("maxlength", "120");
++    await customLabel.fill("Instagram");
++    await custom
++      .getByLabel("Destination URL")
++      .fill("https://example.com/custom");
++    await saved(page);
++    await expect(customSelect).toHaveValue("custom");
++    await page.getByRole("button", { name: "Appearance", exact: true }).click();
++    await page.getByRole("button", { name: "Content", exact: true }).click();
++    await expect(customSelect).toHaveValue("custom");
++    await customSelect.selectOption("YouTube");
++    await customSelect.selectOption("custom");
++    await expect(customLabel).toHaveValue("Instagram");
++    await customLabel.fill(
++      "Selected work with a long label that wraps on mobile and remains fully readable",
++    );
++    await customSelect.selectOption("Bluesky");
++    await customSelect.selectOption("custom");
++    await expect(customLabel).toHaveValue(
++      "Selected work with a long label that wraps on mobile and remains fully readable",
++    );
++    await expect(custom.getByLabel("Destination URL")).toHaveValue(
++      "https://example.com/custom",
++    );
++    await saved(page);
++    await page.screenshot({
++      path: "artifacts/social-links/editor-custom.png",
++      fullPage: true,
++    });
++    await page.reload();
++    await expect(customSelect).toBeVisible();
++    await expect(customSelect).toHaveValue("custom");
++    await expect(customLabel).toHaveValue(
++      "Selected work with a long label that wraps on mobile and remains fully readable",
++    );
++
++    for (const label of ["Kick", "Substack", "YouTube"]) {
++      await page.getByRole("button", { name: "Add link", exact: true }).click();
++      const block = page.locator(".block").last();
++      await block.getByLabel("Link label", { exact: true }).selectOption(label);
++      await block
++        .getByLabel("Destination URL")
++        .fill(`https://example.com/${label}`);
++    }
++    await saved(page);
++    const preview = page.locator(".preview-frame");
++    await expect(preview.locator(".public-link")).toHaveCount(5);
++    await expect(preview.locator(".public-link[href]")).toHaveCount(0);
++    await publish(page);
++    const live = await visitor.newPage();
++    expect((await live.goto(`/@${profile.handle}`))?.status()).toBe(200);
++    const icons = (target: Page, selector: string) =>
++      target
++        .locator(`${selector} .link-icon`)
++        .evaluateAll((svgs) => svgs.map((svg) => svg.innerHTML));
++    expect(await icons(live, ".public-links")).toEqual(
++      await icons(page, ".preview-frame .public-links"),
++    );
++    await expect(
++      live.getByRole("link", { name: "GitHub", exact: true }),
++    ).toHaveAttribute("href", "https://example.com/work");
++    await expect(
++      live.locator("svg[aria-hidden=true][focusable=false]"),
++    ).toHaveCount(5);
++    await live.screenshot({
++      path: "artifacts/social-links/public-social-390.png",
++      fullPage: true,
++    });
++    for (const width of [320, 390, 768]) {
++      await live.setViewportSize({ width, height: 844 });
++      expect(
++        await live.evaluate(
++          () => document.documentElement.scrollWidth <= innerWidth,
++        ),
++      ).toBe(true);
++      await page.setViewportSize({ width, height: 844 });
++      expect(
++        await page.evaluate(
++          () => document.documentElement.scrollWidth <= innerWidth,
++        ),
++      ).toBe(true);
++    }
++  } finally {
++    await visitor.close();
++    await removeOwner(email);
++  }
++});
++
++test("blank choice and empty Custom focus visible controls; hide and undo retain Custom mode and cache", async ({
++  page,
++}) => {
++  const email = await sessionOwner(page);
++  try {
++    await page.setViewportSize({ width: 390, height: 844 });
++    await createProfile(page);
++    await page.getByRole("button", { name: "Add link", exact: true }).click();
++    const select = page.getByLabel("Link label", { exact: true });
++    await expect(select).toBeFocused();
++    await page.getByLabel("Destination URL").fill("https://example.com/");
++    await page.locator("summary").click();
++    await attemptPublish(page);
++    await expect(select).toBeFocused();
++    await expect(select).toHaveAttribute("aria-invalid", "true");
++    await expect(page.locator(".field-error[role=alert]")).toHaveText(
++      "Choose a platform or Custom for this visible link.",
++    );
++    await select.selectOption("custom");
++    const label = page.getByLabel("Custom label", { exact: true });
++    await saved(page);
++    await page.reload();
++    await expect(select).toBeVisible();
++    await expect(select).toHaveValue("custom");
++    await expect(label).toHaveValue("");
++    await page.locator("summary").click();
++    await attemptPublish(page);
++    await expect(label).toBeFocused();
++    await expect(label).toHaveAttribute("aria-invalid", "true");
++    await label.fill("Instagram");
++    await saved(page);
++    await page.getByRole("button", { name: "Hide", exact: true }).click();
++    await page
++      .getByRole("button", { name: "Private preview", exact: true })
++      .click();
++    await expect(page.locator(".preview-frame .public-link")).toHaveCount(0);
++    await page.getByRole("button", { name: "Edit", exact: true }).click();
++    await page.getByRole("button", { name: "Show", exact: true }).click();
++    await page.getByRole("button", { name: "Remove", exact: true }).click();
++    await expect(
++      page.getByRole("button", { name: "Undo removal", exact: true }),
++    ).toBeFocused();
++    await page.keyboard.press("Enter");
++    await expect(page.locator("summary")).toBeFocused();
++    await expect(select).toHaveValue("custom");
++    await expect(label).toHaveValue("Instagram");
++    await select.selectOption("GitHub");
++    await select.selectOption("custom");
++    await expect(label).toHaveValue("Instagram");
++    await saved(page);
++    await page.reload();
++    await expect(select).toBeVisible();
++    await expect(select).toHaveValue("Instagram");
++  } finally {
++    await removeOwner(email);
++  }
++});
++
++for (const latest of ["YouTube", "Latest saved custom"]) {
++  test(`conflict discard clears local Custom cache and uses ${latest}`, async ({
++    page,
++  }) => {
++    const email = await sessionOwner(page);
++    try {
++      await createProfile(page);
++      await addLink(page);
++      const second = await page.context().newPage();
++      await second.goto(page.url());
++      const select = second.getByLabel("Link label", { exact: true });
++      await expect(select).toBeEnabled();
++      if (latest === "YouTube")
++        await page
++          .getByLabel("Link label", { exact: true })
++          .selectOption(latest);
++      else await page.getByLabel("Custom label", { exact: true }).fill(latest);
++      await saved(page);
++      await second
++        .getByLabel("Custom label", { exact: true })
++        .fill("Discarded local custom text");
++      await expect(
++        second.getByRole("button", {
++          name: "Reload latest draft",
++          exact: true,
++        }),
++      ).toBeVisible();
++      await second
++        .getByRole("button", { name: "Reload latest draft", exact: true })
++        .click();
++      await second
++        .getByRole("button", { name: "Discard & reload", exact: true })
++        .click();
++      await expect(select).toHaveValue(
++        latest === "YouTube" ? latest : "custom",
++      );
++      await select.selectOption("custom");
++      await expect(
++        second.getByLabel("Custom label", { exact: true }),
++      ).toHaveValue(latest === "YouTube" ? "" : latest);
++      await expect(second.getByLabel("Destination URL")).toHaveValue(
++        "https://example.com/work",
++      );
++      await second.close();
++    } finally {
++      await removeOwner(email);
++    }
++  });
++}
++
++test("discarding a conflicting removal clears undo after restoring the saved block", async ({
++  page,
++}) => {
++  const email = await sessionOwner(page);
++  try {
++    await createProfile(page);
++    await addLink(page);
++    const second = await page.context().newPage();
++    await second.goto(page.url());
++    await expect(
++      second.getByLabel("Custom label", { exact: true }),
++    ).toBeEnabled();
++    await page.getByLabel("Bio").fill("Winning revision");
++    await saved(page);
++    await second.getByRole("button", { name: "Remove", exact: true }).click();
++    await expect(
++      second.getByRole("button", { name: "Undo removal", exact: true }),
++    ).toBeVisible();
++    await expect(
++      second.getByRole("button", { name: "Reload latest draft", exact: true }),
++    ).toBeVisible();
++    await second
++      .getByRole("button", { name: "Reload latest draft", exact: true })
++      .click();
++    await second
++      .getByRole("button", { name: "Discard & reload", exact: true })
++      .click();
++    await expect(second.locator(".block")).toHaveCount(1);
++    await expect(
++      second.getByRole("button", { name: "Undo removal", exact: true }),
++    ).toHaveCount(0);
++    await expect(
++      second.getByLabel("Custom label", { exact: true }),
++    ).toHaveValue("Selected work");
++    await second.close();
++  } finally {
++    await removeOwner(email);
++  }
++});
+--- /dev/null
++++ b/docs/icon-attribution.md
+@@ -0,0 +1,9 @@
++# Link icon attribution
++
++Linky bundles SVG icons from React Icons **5.7.0**. No icon is fetched at runtime.
++
++- **Font Awesome 6**, by Fonticons, Inc. ([project](https://fontawesome.com/), [React Icons collection](https://react-icons.github.io/react-icons/icons/fa6/)), supplies all platform marks except Kick and Substack, plus the generic chain-link icon. These SVGs are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The packaged SVG paths are unchanged; Linky controls size and inherited color.
++- **Simple Icons** ([project](https://simpleicons.org/), [React Icons collection](https://react-icons.github.io/react-icons/icons/si/)) supplies `SiKick` and `SiSubstack`, licensed under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). The packaged SVG paths are unchanged.
++- The **React Icons** wrapper code is copyright 2018 kamijin_fanta and licensed under [MIT](https://github.com/react-icons/react-icons/blob/master/LICENSE). Its full license notice ships in `node_modules/react-icons/LICENSE` and the pinned npm package.
++
++Brand marks belong to their respective owners. Their use identifies a link label and does not imply endorsement. The registry in `src/features/profiles/link-platforms.tsx` records each selected packaged export.

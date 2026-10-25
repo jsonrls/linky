@@ -1,0 +1,14 @@
+:root {
+  --font-sans: system-ui, "Segoe UI", sans-serif;
+  --canvas: #f8fafc;
+  --raised: #fff;
+  --ink: #0f172a;
+  --secondary: #475569;
+  --divider: #cbd5e1;
+  --input: #64748b;
+  --accent: #1d4ed8;
+  --hover: #1e40af;
+  --focus: #2563eb;
+  --error: #b91c1c;
+  --success: #166534;
+}

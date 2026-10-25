@@ -1,0 +1,1 @@
+-- No fictional customer profiles. Integration tests create isolated local fixtures.

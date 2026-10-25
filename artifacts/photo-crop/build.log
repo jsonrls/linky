@@ -1,0 +1,17 @@
+
+> linky@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 68ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 889ms
+  Running TypeScript ...
+tests/e2e/photo-crop.spec.ts(388,24): error TS2339: Property 'naturalWidth' does not exist on type 'SVGElement | HTMLElement'.
+  Property 'naturalWidth' does not exist on type 'SVGElement'.
+tests/e2e/photo-crop.spec.ts(389,25): error TS2339: Property 'naturalHeight' does not exist on type 'SVGElement | HTMLElement'.
+  Property 'naturalHeight' does not exist on type 'SVGElement'.
+Failed to type check.
+

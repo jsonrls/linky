@@ -1,0 +1,164 @@
+[
+  {
+    "label": "Facebook↗",
+    "color": "rgb(8, 102, 255)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "GitHub↗",
+    "color": "rgb(24, 23, 23)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Kick↗",
+    "color": "rgb(0, 0, 0)",
+    "background": "rgb(83, 252, 25)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Snapchat↗",
+    "color": "rgb(0, 0, 0)",
+    "background": "rgb(255, 252, 0)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "YouTube↗",
+    "color": "rgb(255, 0, 0)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Custom link↗",
+    "color": "rgb(15, 23, 42)",
+    "background": "rgba(0, 0, 0, 0)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "0px",
+    "margin": "0px"
+  },
+  {
+    "label": "Facebook↗",
+    "color": "rgb(8, 102, 255)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "GitHub↗",
+    "color": "rgb(24, 23, 23)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Kick↗",
+    "color": "rgb(0, 0, 0)",
+    "background": "rgb(83, 252, 25)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Snapchat↗",
+    "color": "rgb(0, 0, 0)",
+    "background": "rgb(255, 252, 0)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "YouTube↗",
+    "color": "rgb(255, 0, 0)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Custom link↗",
+    "color": "rgb(255, 255, 255)",
+    "background": "rgba(0, 0, 0, 0)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "0px",
+    "margin": "0px"
+  },
+  {
+    "label": "Facebook↗",
+    "color": "rgb(8, 102, 255)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "GitHub↗",
+    "color": "rgb(24, 23, 23)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Kick↗",
+    "color": "rgb(0, 0, 0)",
+    "background": "rgb(83, 252, 25)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Snapchat↗",
+    "color": "rgb(0, 0, 0)",
+    "background": "rgb(255, 252, 0)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "YouTube↗",
+    "color": "rgb(255, 0, 0)",
+    "background": "rgb(255, 255, 255)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "3px",
+    "margin": "-3px"
+  },
+  {
+    "label": "Custom link↗",
+    "color": "rgb(248, 250, 252)",
+    "background": "rgba(0, 0, 0, 0)",
+    "width": "22px",
+    "height": "22px",
+    "padding": "0px",
+    "margin": "0px"
+  }
+]

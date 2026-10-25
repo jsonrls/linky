@@ -1,0 +1,17 @@
+{
+  "crop": {
+    "centerX": 0.5333333333333333,
+    "centerY": 0.5222222222222223,
+    "zoom": 3
+  },
+  "dimensions": {
+    "width": 240,
+    "height": 360
+  },
+  "output": {
+    "width": 80,
+    "height": 80
+  },
+  "previewMeanAbsoluteChannelError": 1.1307926432291666,
+  "originalBytesUnchanged": true
+}

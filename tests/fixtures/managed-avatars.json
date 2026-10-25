@@ -1,0 +1,47 @@
+[
+  {
+    "url": "/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+    "valid": true
+  },
+  {
+    "url": "/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb\n",
+    "valid": false
+  },
+  {
+    "url": "/api/profile-photos/AAAAAAAA-AAAA-4AAA-8AAA-AAAAAAAAAAAA/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+    "valid": false
+  },
+  {
+    "url": "/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb?download=1",
+    "valid": false
+  },
+  {
+    "url": "/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb#photo",
+    "valid": false
+  },
+  {
+    "url": "/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb.webp",
+    "valid": false
+  },
+  {
+    "url": "//example.test/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+    "valid": false
+  },
+  {
+    "url": "/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/../secret",
+    "valid": false
+  },
+  {
+    "url": "/api/profile-photos/%61aaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+    "valid": false
+  },
+  {
+    "url": "/api/profile-photos/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbg",
+    "valid": false
+  },
+  {
+    "url": "/api/other/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+    "valid": false
+  },
+  { "url": "http://127.0.0.1:3000/photo.webp", "valid": false }
+]

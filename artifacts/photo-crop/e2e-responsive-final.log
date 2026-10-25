@@ -1,0 +1,13 @@
+
+Running 4 tests using 1 worker
+
+(node:55562) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/photo-crop.spec.ts:111:5 › cancel, Escape and close send no upload; reset, arrows, buttons and captured drag clamp the local crop (3.3s)
+  ✓  2 [chromium] › tests/e2e/photo-crop.spec.ts:601:5 › known autosave session expiry keeps crop open with disabled confirmation and no photo POST (2.4s)
+(node:55609) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [webkit] › tests/e2e/photo-crop.spec.ts:111:5 › cancel, Escape and close send no upload; reset, arrows, buttons and captured drag clamp the local crop (3.3s)
+  ✓  4 [webkit] › tests/e2e/photo-crop.spec.ts:601:5 › known autosave session expiry keeps crop open with disabled confirmation and no photo POST (2.5s)
+
+  4 passed (12.7s)

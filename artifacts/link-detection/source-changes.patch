@@ -1,0 +1,597 @@
+--- before/src/features/editor/Editor.tsx
++++ after/src/features/editor/Editor.tsx
+@@ -6,6 +6,7 @@
+ import { OtpForm } from "@/features/auth/OtpForm";
+ import { ProfileRenderer } from "@/features/public-profile/ProfileRenderer";
+ import { LinkIcon } from "@/features/profiles/link-platforms";
++import { detectLinkPlatform } from "@/features/profiles/detect-link-platform";
+ import { api, RequestError, unresolvedRequest } from "@/lib/client-api";
+ import {
+   publicationIssue,
+@@ -67,6 +68,9 @@
+   const [linkChoices, setLinkChoices] = useState<
+     Record<string, LinkLabelChoice>
+   >({});
++  const [automaticLinks, setAutomaticLinks] = useState<Record<string, boolean>>(
++    {},
++  );
+   const publicUrl =
+     typeof window === "undefined"
+       ? `/@${profile.handle}`
+@@ -94,6 +98,30 @@
+         block.id === id ? ({ ...block, ...patch } as Block) : block,
+       ),
+     });
++  }
++  function updateLinkUrl(block: Extract<Block, { type: "link" }>, url: string) {
++    const automatic = !!automaticLinks[block.id];
++    const choice = linkChoices[block.id];
++    // Loaded nonempty labels and every explicit choice belong to the author.
++    const eligible = automatic || (!block.label && !choice?.selection);
++    const detected = eligible ? detectLinkPlatform(url) : undefined;
++    if (!eligible || (!detected && !automatic)) {
++      updateBlock(block.id, { url });
++      return;
++    }
++    const label = detected ?? "";
++    updateBlock(block.id, { url, label });
++    setLinkChoices((choices) => ({
++      ...choices,
++      [block.id]: { selection: label, customLabel: choice?.customLabel ?? "" },
++    }));
++    setAutomaticLinks((links) => ({ ...links, [block.id]: !!detected }));
++    if (label !== block.label)
++      setMessage(
++        detected
++          ? `${detected} selected from the URL. You can choose a different label.`
++          : "Automatic platform choice cleared. Choose a platform or Custom.",
++      );
+   }
+   function add(type: "link" | "text") {
+     const block: Block =
+@@ -216,8 +244,9 @@
+     }
+   }
+   function reloadDraft(latest: Profile) {
+-    // Discard UI-only custom text with the local draft, never on autosave receipts.
++    // Discard UI-only choices with the local draft, never on autosave receipts.
+     setLinkChoices({});
++    setAutomaticLinks({});
+     setUndo(null);
+     draft.reload(latest);
+   }
+@@ -551,6 +580,10 @@
+                                     choiceForLabel(block.label)
+                                   }
+                                   onChange={(choice, label) => {
++                                    setAutomaticLinks((links) => ({
++                                      ...links,
++                                      [block.id]: false,
++                                    }));
+                                     setLinkChoices((choices) => ({
+                                       ...choices,
+                                       [block.id]: choice,
+@@ -572,11 +605,9 @@
+                                   type="url"
+                                   maxLength={2048}
+                                   onChange={(e) =>
+-                                    updateBlock(block.id, {
+-                                      url: e.target.value,
+-                                    })
++                                    updateLinkUrl(block, e.target.value)
+                                   }
+-                                  hint="HTTP or HTTPS. Use an ASCII hostname, IPv4 or bracketed IPv6 address, without credentials."
++                                  hint="Supports automatic platform detection. HTTP or HTTPS. Use an ASCII hostname, IPv4 or bracketed IPv6 address, without credentials."
+                                 />
+                               </>
+                             ) : (
+--- before/src/features/profiles/link-platforms.tsx
++++ after/src/features/profiles/link-platforms.tsx
+@@ -35,6 +35,7 @@
+ type LinkPlatform = {
+   label: string;
+   Icon: IconType;
++  domains: readonly string[];
+   color: string;
+   background?: string;
+ };
+@@ -43,41 +44,173 @@
+ // Solid colors: https://github.com/simple-icons/simple-icons/blob/develop/data/simple-icons.json
+ // LinkedIn: the 13.0.0 dataset and https://brand.linkedin.com/in-logo (blue on white).
+ export const linkPlatforms: readonly LinkPlatform[] = [
+-  { label: "Behance", Icon: FaBehance, color: "#1769FF" },
+-  { label: "Bluesky", Icon: FaBluesky, color: "#1185FE" },
+-  { label: "Discord", Icon: FaDiscord, color: "#5865F2" },
+-  { label: "Dribbble", Icon: FaDribbble, color: "#EA4C89" },
+-  { label: "Facebook", Icon: FaFacebook, color: "#0866FF" },
+-  { label: "GitHub", Icon: FaGithub, color: "#181717" },
+-  { label: "Instagram", Icon: FaInstagram, color: "#FF0069" },
+-  { label: "Kick", Icon: SiKick, color: "#000000", background: "#53FC19" },
+-  { label: "LINE", Icon: FaLine, color: "#00C300" },
+-  { label: "LinkedIn", Icon: FaLinkedin, color: "#0A66C2" },
+-  { label: "Mastodon", Icon: FaMastodon, color: "#6364FF" },
+-  { label: "Medium", Icon: FaMedium, color: "#000000" },
+-  { label: "Messenger", Icon: FaFacebookMessenger, color: "#0866FF" },
+-  { label: "Patreon", Icon: FaPatreon, color: "#000000" },
+-  { label: "Pinterest", Icon: FaPinterest, color: "#BD081C" },
+-  { label: "Reddit", Icon: FaReddit, color: "#FF4500" },
+-  { label: "Signal", Icon: FaSignalMessenger, color: "#3B45FD" },
++  {
++    label: "Behance",
++    domains: ["behance.net"],
++    Icon: FaBehance,
++    color: "#1769FF",
++  },
++  {
++    label: "Bluesky",
++    domains: ["bsky.app", "bsky.social"],
++    Icon: FaBluesky,
++    color: "#1185FE",
++  },
++  {
++    label: "Discord",
++    domains: ["discord.com", "discord.gg"],
++    Icon: FaDiscord,
++    color: "#5865F2",
++  },
++  {
++    label: "Dribbble",
++    domains: ["dribbble.com"],
++    Icon: FaDribbble,
++    color: "#EA4C89",
++  },
++  {
++    label: "Facebook",
++    domains: ["facebook.com"],
++    Icon: FaFacebook,
++    color: "#0866FF",
++  },
++  {
++    label: "GitHub",
++    domains: ["github.com"],
++    Icon: FaGithub,
++    color: "#181717",
++  },
++  {
++    label: "Instagram",
++    domains: ["instagram.com"],
++    Icon: FaInstagram,
++    color: "#FF0069",
++  },
++  {
++    label: "Kick",
++    domains: ["kick.com"],
++    Icon: SiKick,
++    color: "#000000",
++    background: "#53FC19",
++  },
++  { label: "LINE", domains: ["line.me"], Icon: FaLine, color: "#00C300" },
++  {
++    label: "LinkedIn",
++    domains: ["linkedin.com"],
++    Icon: FaLinkedin,
++    color: "#0A66C2",
++  },
++  {
++    label: "Mastodon",
++    domains: ["mastodon.social", "mastodon.online"],
++    Icon: FaMastodon,
++    color: "#6364FF",
++  },
++  {
++    label: "Medium",
++    domains: ["medium.com"],
++    Icon: FaMedium,
++    color: "#000000",
++  },
++  {
++    label: "Messenger",
++    domains: ["messenger.com"],
++    Icon: FaFacebookMessenger,
++    color: "#0866FF",
++  },
++  {
++    label: "Patreon",
++    domains: ["patreon.com"],
++    Icon: FaPatreon,
++    color: "#000000",
++  },
++  {
++    label: "Pinterest",
++    domains: ["pinterest.com"],
++    Icon: FaPinterest,
++    color: "#BD081C",
++  },
++  {
++    label: "Reddit",
++    domains: ["reddit.com"],
++    Icon: FaReddit,
++    color: "#FF4500",
++  },
++  {
++    label: "Signal",
++    domains: ["signal.org"],
++    Icon: FaSignalMessenger,
++    color: "#3B45FD",
++  },
+   {
+     label: "Snapchat",
++    domains: ["snapchat.com"],
+     Icon: FaSnapchat,
+     color: "#000000",
+     background: "#FFFC00",
+   },
+-  { label: "SoundCloud", Icon: FaSoundcloud, color: "#FF5500" },
+-  { label: "Spotify", Icon: FaSpotify, color: "#1ED760" },
+-  { label: "Substack", Icon: SiSubstack, color: "#FF6719" },
+-  { label: "Telegram", Icon: FaTelegram, color: "#26A5E4" },
+-  { label: "Threads", Icon: FaThreads, color: "#000000" },
+-  { label: "TikTok", Icon: FaTiktok, color: "#000000" },
+-  { label: "Tumblr", Icon: FaTumblr, color: "#36465D" },
+-  { label: "Twitch", Icon: FaTwitch, color: "#9146FF" },
+-  { label: "Vimeo", Icon: FaVimeo, color: "#1AB7EA" },
+-  { label: "WhatsApp", Icon: FaWhatsapp, color: "#25D366" },
+-  { label: "X", Icon: FaXTwitter, color: "#000000" },
+-  { label: "YouTube", Icon: FaYoutube, color: "#FF0000" },
++  {
++    label: "SoundCloud",
++    domains: ["soundcloud.com"],
++    Icon: FaSoundcloud,
++    color: "#FF5500",
++  },
++  {
++    label: "Spotify",
++    domains: ["spotify.com"],
++    Icon: FaSpotify,
++    color: "#1ED760",
++  },
++  {
++    label: "Substack",
++    domains: ["substack.com"],
++    Icon: SiSubstack,
++    color: "#FF6719",
++  },
++  {
++    label: "Telegram",
++    domains: ["telegram.org", "t.me", "telegram.me"],
++    Icon: FaTelegram,
++    color: "#26A5E4",
++  },
++  {
++    label: "Threads",
++    domains: ["threads.net", "threads.com"],
++    Icon: FaThreads,
++    color: "#000000",
++  },
++  {
++    label: "TikTok",
++    domains: ["tiktok.com"],
++    Icon: FaTiktok,
++    color: "#000000",
++  },
++  {
++    label: "Tumblr",
++    domains: ["tumblr.com"],
++    Icon: FaTumblr,
++    color: "#36465D",
++  },
++  { label: "Twitch", domains: ["twitch.tv"], Icon: FaTwitch, color: "#9146FF" },
++  { label: "Vimeo", domains: ["vimeo.com"], Icon: FaVimeo, color: "#1AB7EA" },
++  {
++    label: "WhatsApp",
++    domains: ["whatsapp.com", "wa.me"],
++    Icon: FaWhatsapp,
++    color: "#25D366",
++  },
++  {
++    label: "X",
++    domains: ["x.com", "twitter.com"],
++    Icon: FaXTwitter,
++    color: "#000000",
++  },
++  {
++    label: "YouTube",
++    domains: ["youtube.com", "youtu.be"],
++    Icon: FaYoutube,
++    color: "#FF0000",
++  },
+ ];
+ 
+ export function linkPlatform(label: string) {
+--- before/src/features/profiles/detect-link-platform.ts
++++ after/src/features/profiles/detect-link-platform.ts
+@@ -0,0 +1,12 @@
++import { safeUrl } from "./model";
++import { linkPlatforms } from "./link-platforms";
++
++export function detectLinkPlatform(value: string): string | undefined {
++  if (!safeUrl(value)) return undefined;
++  const hostname = new URL(value).hostname;
++  return linkPlatforms.find((platform) =>
++    platform.domains.some(
++      (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
++    ),
++  )?.label;
++}
+--- before/src/features/profiles/detect-link-platform.test.ts
++++ after/src/features/profiles/detect-link-platform.test.ts
+@@ -0,0 +1,84 @@
++import { describe, expect, it } from "vitest";
++import { detectLinkPlatform } from "./detect-link-platform";
++
++describe("platform detection", () => {
++  it.each([
++    ["behance.net", "Behance"],
++    ["bsky.app", "Bluesky"],
++    ["discord.com", "Discord"],
++    ["dribbble.com", "Dribbble"],
++    ["facebook.com", "Facebook"],
++    ["github.com", "GitHub"],
++    ["instagram.com", "Instagram"],
++    ["kick.com", "Kick"],
++    ["line.me", "LINE"],
++    ["linkedin.com", "LinkedIn"],
++    ["mastodon.social", "Mastodon"],
++    ["medium.com", "Medium"],
++    ["messenger.com", "Messenger"],
++    ["patreon.com", "Patreon"],
++    ["pinterest.com", "Pinterest"],
++    ["reddit.com", "Reddit"],
++    ["signal.org", "Signal"],
++    ["snapchat.com", "Snapchat"],
++    ["soundcloud.com", "SoundCloud"],
++    ["spotify.com", "Spotify"],
++    ["substack.com", "Substack"],
++    ["telegram.org", "Telegram"],
++    ["threads.com", "Threads"],
++    ["tiktok.com", "TikTok"],
++    ["tumblr.com", "Tumblr"],
++    ["twitch.tv", "Twitch"],
++    ["vimeo.com", "Vimeo"],
++    ["whatsapp.com", "WhatsApp"],
++    ["x.com", "X"],
++    ["youtube.com", "YouTube"],
++    ["youtu.be", "YouTube"],
++    ["twitter.com", "X"],
++    ["wa.me", "WhatsApp"],
++    ["t.me", "Telegram"],
++    ["telegram.me", "Telegram"],
++    ["discord.gg", "Discord"],
++    ["threads.net", "Threads"],
++    ["bsky.social", "Bluesky"],
++    ["mastodon.online", "Mastodon"],
++  ])("recognizes %s", (host, label) => {
++    expect(detectLinkPlatform(`https://${host}/a?ref=example#bio`)).toBe(label);
++  });
++
++  it("accepts case-insensitive hosts, HTTP and boundary-separated subdomains", () => {
++    expect(detectLinkPlatform("HTTP://WWW.INSTAGRAM.COM/person")).toBe(
++      "Instagram",
++    );
++    expect(detectLinkPlatform("https://open.spotify.com/artist/123")).toBe(
++      "Spotify",
++    );
++    expect(detectLinkPlatform("https://writer.substack.com/p/article")).toBe(
++      "Substack",
++    );
++  });
++
++  it.each([
++    "http://instagram.com.evil.com",
++    "https://notinstagram.com/",
++    "https://instagram.com@evil.com",
++    "https://name:secret@instagram.com/",
++    "https://evil.com/instagram.com",
++    "https://evil.com/?url=https://instagram.com",
++    "https://instagram-com.example",
++    "https://instagrаm.com/",
++    "ftp://instagram.com/",
++    "instagram.com/person",
++    "https://",
++    "https://instagram.com:99999/",
++    "https://instagram.com/white space",
++    "https://instagram.com\\@evil.com/",
++    "https://127.0.0.1/",
++    "https://my-mastodon.example/@person",
++    "https://newsletter.example/",
++    "https://github.io/",
++    "",
++  ])("leaves unknown or invalid URL generic: %s", (url) => {
++    expect(detectLinkPlatform(url)).toBeUndefined();
++  });
++});
+--- before/tests/e2e/link-detection.spec.ts
++++ after/tests/e2e/link-detection.spec.ts
+@@ -0,0 +1,192 @@
++import { test, expect, type Locator, type Page } from "@playwright/test";
++import { mkdir } from "node:fs/promises";
++import {
++  sessionOwner,
++  createProfile,
++  saved,
++  publish,
++  removeOwner,
++} from "./helpers";
++
++test.beforeEach(({}, info) =>
++  test.skip(
++    info.project.name !== "chromium",
++    "Focused detection coverage runs in Chromium.",
++  ),
++);
++
++async function pasteUrl(page: Page, field: Locator, value: string) {
++  await page.evaluate((text) => navigator.clipboard.writeText(text), value);
++  await field.focus();
++  await field.press("ControlOrMeta+A");
++  await field.press("ControlOrMeta+V");
++  await expect(field).toHaveValue(value);
++  await expect(field).toBeFocused();
++}
++
++test("clipboard detection follows automatic choices, preserves explicit labels, and survives save/publication", async ({
++  page,
++  context,
++  browser,
++}) => {
++  const email = await sessionOwner(page);
++  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
++  const visitor = await browser.newContext({
++    viewport: { width: 390, height: 844 },
++  });
++  try {
++    await page.setViewportSize({ width: 1440, height: 1000 });
++    const profile = await createProfile(page, "detect");
++    await page.getByRole("button", { name: "Add link", exact: true }).click();
++    const block = page.locator(".block").first();
++    const select = block.getByLabel("Link label", { exact: true });
++    const url = block.getByLabel("Destination URL");
++    await expect(select).toHaveValue("");
++    const raw = "https://WWW.INSTAGRAM.COM/person?from=clipboard#bio";
++    await pasteUrl(page, url, raw);
++    await expect(select).toHaveValue("Instagram");
++    await expect(
++      page
++        .getByRole("status")
++        .filter({ hasText: "Instagram selected from the URL" }),
++    ).toBeVisible();
++    await pasteUrl(page, url, "https://youtu.be/example");
++    await expect(select).toHaveValue("YouTube");
++    for (const invalid of [
++      "https://example.com/work",
++      "https://",
++      "http://instagram.com.evil.com",
++      "https://instagram.com@evil.com",
++    ]) {
++      await pasteUrl(page, url, "https://github.com/person");
++      await expect(select).toHaveValue("GitHub");
++      await url.fill(invalid);
++      await expect(url).toBeFocused();
++      await expect(select).toHaveValue("");
++    }
++    await pasteUrl(page, url, "https://t.me/person");
++    await expect(select).toHaveValue("Telegram");
++    await select.selectOption("custom");
++    const custom = block.getByLabel("Custom label", { exact: true });
++    await expect(custom).toHaveValue("");
++    await pasteUrl(page, url, "https://instagram.com/person");
++    await expect(select).toHaveValue("custom");
++    await expect(custom).toHaveValue("");
++    await custom.fill("GitHub");
++    await pasteUrl(page, url, "https://youtu.be/example");
++    await expect(select).toHaveValue("custom");
++    await expect(custom).toHaveValue("GitHub");
++    await select.selectOption("LINE");
++    await pasteUrl(page, url, "https://wa.me/123");
++    await expect(select).toHaveValue("LINE");
++    await url.fill("invalid");
++    await expect(select).toHaveValue("LINE");
++    await url.fill("https://example.com/manual");
++
++    await page.getByRole("button", { name: "Add link", exact: true }).click();
++    const automatic = page.locator(".block").nth(1);
++    const automaticSelect = automatic.getByLabel("Link label", { exact: true });
++    const automaticUrl = automatic.getByLabel("Destination URL");
++    await pasteUrl(page, automaticUrl, "https://github.com/person");
++    await automatic.getByRole("button", { name: "Hide", exact: true }).click();
++    await expect(page.locator(".preview-frame .public-link")).toHaveCount(1);
++    await automatic.getByRole("button", { name: "Show", exact: true }).click();
++    await automatic
++      .getByRole("button", { name: "Remove", exact: true })
++      .click();
++    await page
++      .getByRole("button", { name: "Undo removal", exact: true })
++      .click();
++    await pasteUrl(page, automaticUrl, "https://youtu.be/example");
++    await expect(automaticSelect).toHaveValue("YouTube");
++    await saved(page);
++    await mkdir("artifacts/link-detection", { recursive: true });
++    await page.screenshot({
++      path: "artifacts/link-detection/editor-detected.png",
++      fullPage: true,
++    });
++    await page.reload();
++    await expect(automaticSelect).toBeVisible();
++    await expect(automaticSelect).toHaveValue("YouTube");
++    await pasteUrl(page, automaticUrl, "https://instagram.com/person");
++    await expect(automaticSelect).toHaveValue("YouTube");
++    await saved(page);
++    await publish(page);
++    const live = await visitor.newPage();
++    await live.goto(`/@${profile.handle}`);
++    const publicLink = live.getByRole("link", { name: "YouTube", exact: true });
++    await expect(publicLink).toHaveAttribute(
++      "href",
++      "https://instagram.com/person",
++    );
++    expect(await publicLink.locator("svg").innerHTML()).toBe(
++      await automatic.locator("summary svg").innerHTML(),
++    );
++    await live.screenshot({
++      path: "artifacts/link-detection/public-detected-390.png",
++      fullPage: true,
++    });
++  } finally {
++    await visitor.close();
++    await removeOwner(email);
++  }
++});
++
++test("saved empty labels are eligible but explicit empty Custom stays protected until reload", async ({
++  page,
++}) => {
++  const email = await sessionOwner(page);
++  try {
++    await createProfile(page, "empty");
++    await page.getByRole("button", { name: "Add link", exact: true }).click();
++    const select = page.getByLabel("Link label", { exact: true });
++    const url = page.getByLabel("Destination URL");
++    await select.selectOption("custom");
++    await url.fill("https://example.com/unfinished");
++    await saved(page);
++    await url.fill("https://instagram.com/person");
++    await expect(select).toHaveValue("custom");
++    await saved(page);
++    await page.reload();
++    await expect(select).toBeVisible();
++    await expect(select).toHaveValue("custom");
++    await url.fill("https://wa.me/123");
++    await expect(select).toHaveValue("WhatsApp");
++    await saved(page);
++  } finally {
++    await removeOwner(email);
++  }
++});
++
++test("conflict discard clears automatic ownership", async ({ page }) => {
++  const email = await sessionOwner(page);
++  try {
++    await createProfile(page, "reset");
++    await page.getByRole("button", { name: "Add link", exact: true }).click();
++    const select = page.getByLabel("Link label", { exact: true });
++    const url = page.getByLabel("Destination URL");
++    await url.fill("https://github.com/person");
++    await expect(select).toHaveValue("GitHub");
++    await saved(page);
++    const other = await page.context().newPage();
++    await other.goto(page.url());
++    await expect(other.getByLabel("Bio")).toBeEnabled();
++    await other.getByLabel("Link label", { exact: true }).selectOption("LINE");
++    await saved(other);
++    await url.fill("https://youtu.be/example");
++    await expect(select).toHaveValue("YouTube");
++    await page
++      .getByRole("button", { name: "Reload latest draft", exact: true })
++      .click();
++    await page
++      .getByRole("button", { name: "Discard & reload", exact: true })
++      .click();
++    await expect(select).toHaveValue("LINE");
++    await url.fill("https://instagram.com/person");
++    await expect(select).toHaveValue("LINE");
++    await saved(page);
++    await other.close();
++  } finally {
++    await removeOwner(email);
++  }
++});

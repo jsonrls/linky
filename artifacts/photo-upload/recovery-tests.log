@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:49235) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/recovery.spec.ts:36:5 › lost publish and unpublish receipts keep the original intent until reconciled (6.3s)
+  ✓  2 [chromium] › tests/e2e/recovery.spec.ts:133:5 › unreadable committed save survives real session loss and OTP reauthentication (4.5s)
+  ✓  3 [chromium] › tests/e2e/recovery.spec.ts:208:5 › concurrent tab conflict pauses autosave, preserves copy, and requires explicit discard (4.0s)
+
+  3 passed (15.4s)

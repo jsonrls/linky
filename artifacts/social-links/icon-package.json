@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "version": "5.7.0",
+    "dist-tags.latest": "5.7.0",
+    "license": "MIT"
+  },
+  "installed": "5.7.0",
+  "entrypoints": {
+    "fa6": "file:///Volumes/json%20SSD/dev-projects/linky/node_modules/react-icons/fa6/index.mjs",
+    "si": "file:///Volumes/json%20SSD/dev-projects/linky/node_modules/react-icons/si/index.mjs"
+  },
+  "icons": [
+    {
+      "name": "FaBehance",
+      "exportType": "function"
+    },
+    {
+      "name": "FaBluesky",
+      "exportType": "function"
+    },
+    {
+      "name": "FaDiscord",
+      "exportType": "function"
+    },
+    {
+      "name": "FaDribbble",
+      "exportType": "function"
+    },
+    {
+      "name": "FaFacebook",
+      "exportType": "function"
+    },
+    {
+      "name": "FaGithub",
+      "exportType": "function"
+    },
+    {
+      "name": "FaInstagram",
+      "exportType": "function"
+    },
+    {
+      "name": "SiKick",
+      "exportType": "function"
+    },
+    {
+      "name": "FaLine",
+      "exportType": "function"
+    },
+    {
+      "name": "FaLinkedin",
+      "exportType": "function"
+    },
+    {
+      "name": "FaMastodon",
+      "exportType": "function"
+    },
+    {
+      "name": "FaMedium",
+      "exportType": "function"
+    },
+    {
+      "name": "FaFacebookMessenger",
+      "exportType": "function"
+    },
+    {
+      "name": "FaPatreon",
+      "exportType": "function"
+    },
+    {
+      "name": "FaPinterest",
+      "exportType": "function"
+    },
+    {
+      "name": "FaReddit",
+      "exportType": "function"
+    },
+    {
+      "name": "FaSignalMessenger",
+      "exportType": "function"
+    },
+    {
+      "name": "FaSnapchat",
+      "exportType": "function"
+    },
+    {
+      "name": "FaSoundcloud",
+      "exportType": "function"
+    },
+    {
+      "name": "FaSpotify",
+      "exportType": "function"
+    },
+    {
+      "name": "SiSubstack",
+      "exportType": "function"
+    },
+    {
+      "name": "FaTelegram",
+      "exportType": "function"
+    },
+    {
+      "name": "FaThreads",
+      "exportType": "function"
+    },
+    {
+      "name": "FaTiktok",
+      "exportType": "function"
+    },
+    {
+      "name": "FaTumblr",
+      "exportType": "function"
+    },
+    {
+      "name": "FaTwitch",
+      "exportType": "function"
+    },
+    {
+      "name": "FaVimeo",
+      "exportType": "function"
+    },
+    {
+      "name": "FaWhatsapp",
+      "exportType": "function"
+    },
+    {
+      "name": "FaXTwitter",
+      "exportType": "function"
+    },
+    {
+      "name": "FaYoutube",
+      "exportType": "function"
+    }
+  ]
+}

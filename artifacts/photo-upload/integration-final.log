@@ -1,0 +1,18 @@
+✔ SQL and JavaScript fixtures agree on exact managed paths, avatar only (2023.734917ms)
+✔ photo permission follows current publication and active owner; browser Storage is denied (652.922542ms)
+(node:49024) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Volumes/json%20SSD/dev-projects/linky/src/features/profiles/templates.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Volumes/json SSD/dev-projects/linky/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ optional media blank handling accepts only ordinary-space emptiness while hidden images stay private (1736.038791ms)
+✔ legacy absence and explicit original roundtrip without normalization (78.262083ms)
+✔ all 20 templates publish media in order and preserve immutable older snapshots and retry semantics (1145.446292ms)
+✔ direct RPC rejects unknown templates and invalid optional types without changing the draft (57.918375ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3608.619625

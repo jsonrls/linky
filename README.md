@@ -1,6 +1,30 @@
-# Linky: milestone one
+# Linky
 
-A Next.js 16 / TypeScript application with real Supabase email OTP, multiple owner profiles, private link and plain-text drafts, and immutable published pages at `/@handle`. The approved Warm Editorial prototype informs the interface. Existing `docs/` and `plan/` sources are reference material; later milestones are not implemented.
+Linky is a link-in-bio app for creating and publishing multiple profile pages. Owners sign in with an email code, edit private drafts, and publish a snapshot at `/@handle`. Changes to a draft stay private until the owner publishes again.
+
+Built with Next.js 16.4.2, React 19.3.1, TypeScript, and Supabase Auth, Postgres, and Storage. The current implementation includes milestone one and subsequent editor, template, and profile-photo improvements. Planning documents describe additional scope and are not a list of shipped features.
+
+## Features
+
+- Email OTP sign-in using Supabase Auth.
+- Multiple profiles with private drafts and separate published snapshots. Accounts default to 30 total profiles and two published profiles.
+- Link and plain-text blocks, a social link picker, and automatic link-platform detection.
+- A profile template picker with 20 named designs, plus support for the original appearance.
+- Profile-photo uploads with crop, position, and zoom controls before upload, plus an HTTPS image URL alternative.
+- Autosave with conflict handling, session recovery, and a way to copy unsaved work.
+- Public pages at `/@handle`, with explicit publish and unpublish actions.
+
+Billing, analytics, contact, and QR controls are not implemented.
+
+## Contents
+
+- [Local setup](#local-setup)
+- [Commands](#commands)
+- [Code and data boundaries](#code-and-data-boundaries)
+- [Profile photos](#profile-photos)
+- [Verification](#verification)
+- [Deployment preparation](#deployment-preparation)
+- [Project documentation](#project-documentation)
 
 ## Local setup
 
@@ -37,6 +61,28 @@ The first start downloads several images and can run while source work continues
 
 Supabase CLI uses standard Docker port bindings on all host interfaces. The application binds `127.0.0.1`, and this setup uses localhost URLs for every service. No global Docker, network or firewall settings were changed, and no remote project was selected or provisioned.
 
+## Commands
+
+Run these commands from the repository root after installing dependencies.
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development app on `127.0.0.1:3000`. |
+| `npm run build` | Build the production app. |
+| `npm start` | Serve the production build on `127.0.0.1:3000`. |
+| `npm run db:start` | Start the local Supabase stack. |
+| `npm run db:stop` | Stop the local stack while preserving data. |
+| `npm run local:env` | Create `.env.local` from the running local stack; refuses to overwrite it. |
+| `npm run lint` | Run ESLint. |
+| `npm run typecheck` | Check TypeScript types. |
+| `npm test` | Run the Vitest suite. |
+| `npm run db:test` | Run local database tests. |
+| `npm run test:integration` | Run integration tests using `.env.local`. |
+| `npm run test:e2e` | Run Playwright against an already running app. |
+| `npm run db:types` | Regenerate `src/types/database.ts` from the local database. |
+
+`npm run db:reset` is available only for disposable local data: it deletes the project's local database contents and reapplies migrations and seed.
+
 ## Code and data boundaries
 
 - `src/app/` contains framework routes and shared layouts. `/app/profiles` lists summaries; selecting a profile fetches that draft alone. Failed workspace loading has an error state rather than an empty list.
@@ -51,7 +97,7 @@ Publication snapshots contain only allowlisted public document fields and visibl
 
 ## Profile photos
 
-Appearance → Profile images includes an optional device photo picker, replacement, draft removal with Undo, and a collapsed HTTPS image URL alternative. JPEG, PNG and still WebP files up to **3 MiB** (shown as 3 MB) and **20 million decoded pixels** are accepted. The server checks the claimed type, signature and complete decode, rejects animations and unsupported formats, applies EXIF orientation, resizes inside 1024 × 1024 without enlarging, and re-encodes to WebP with metadata removed. Sharp **0.35.5** is pinned as a direct runtime dependency; deploy using the Node runtime with its platform-specific Sharp packages installed.
+Appearance → Profile images includes an optional device photo picker, replacement, draft removal with Undo, and a collapsed HTTPS image URL alternative. Device photos can be positioned and zoomed in a square crop preview before upload. Canceling the adjustment leaves the existing photo unchanged and does not upload the selected file. JPEG, PNG and still WebP files up to **3 MiB** (shown as 3 MB) and **20 million decoded pixels** are accepted. The server checks the claimed type, signature and complete decode, rejects animations and unsupported formats, applies EXIF orientation and the selected crop, resizes inside 1024 × 1024 without enlarging, and re-encodes to WebP with metadata removed. Sharp **0.35.5** is pinned as a direct runtime dependency; deploy using the Node runtime with its platform-specific Sharp packages installed.
 
 Uploads authenticate an active owner through `read_profile` before reading file bytes. Both Origin and Host must match `APP_ORIGIN`; uploads use a bounded binary POST to `/api/profiles/{profileUuid}/photo`. Objects have unique immutable keys in the **private** `profile-photos` bucket and are never upserted. Browser Storage reads and writes are denied, including for owners. The server-only service credential performs Storage operations after application authorization.
 
@@ -73,7 +119,7 @@ Autosave serializes writes and retains the original operation ID across unreadab
 
 ## Verification
 
-Start local Supabase and the app first, then run:
+Start local Supabase and create `.env.local` as described above. Run the source, database, and build checks:
 
 ```sh
 npm run lint
@@ -83,9 +129,16 @@ npm run db:test
 npx supabase db lint --local --schema public,private --fail-on warning
 npm run test:integration
 npm run build
+```
+
+For browser tests, start the production build in a separate terminal with `npm start`, then run:
+
+```sh
 npx playwright install chromium firefox webkit
 npm run test:e2e
 ```
+
+Playwright does not start the app automatically. Keep Supabase and the app running throughout the browser suite. Stop any development server using port 3000 before starting the production server.
 
 Integration and browser fixtures refuse non-local Supabase URLs and delete only their own test users. SQL pgTAP fixtures run in a rolled-back transaction. Do not point `TEST_DATABASE_URL` at a shared or production database. Browser tests use real Mailpit OTP; deterministic recovery tests inject lost responses after real database commits. The session recovery case removes browser cookies and restores the same owner with real OTP. Chromium runs recovery fault injection; all three engines run the real owner/public journey. Screenshots cover 320/390/768/1440 editor widths; traces are retained on failure in `test-results/`.
 
@@ -95,11 +148,24 @@ See [weekly maintenance](docs/weekly-maintenance.md) for scheduled tests, depend
 
 ## Deployment preparation
 
-The app uses the standard Next.js build and server runtime supported by Vercel, with Node 24.x declared in `package.json`. No Vercel account, project, domain or deployment was created. Before any separately authorized staging deployment:
+The app requires a Node server runtime, with Node 24.x declared in `package.json` and Sharp installed for the target platform. Before a staging deployment:
 
 1. Configure the canonical HTTPS `APP_ORIGIN`, Supabase URL, publishable key and **server-only** secret key using `.env.example`; never expose the secret through a `NEXT_PUBLIC_` variable.
 2. Apply the reviewed migration to the intended database through its approved workflow. Keep `private` outside the exposed Data API schemas and preserve the explicit grants. Generate database types after approved schema changes using `npm run db:types`.
 3. Configure custom SMTP, the exact code templates and auth limits in the target Supabase project. Verify delivery to non-team addresses; local Mailpit is not evidence of production delivery.
 4. Run the acceptance suites against the staging environment with an appropriately isolated test strategy. Local integration tests intentionally refuse remote targets.
 
-Production email delivery, hosted persistence, Vercel runtime behavior, custom domains and cloud operational monitoring remain unverified because cloud work was outside this assignment. The source supports milestone one plus a social link picker, profile photo uploads and packaged brand icons; see [icon attribution](docs/icon-attribution.md). It contains no billing, analytics, contact or QR controls. Photo verification evidence is in `artifacts/photo-upload/`.
+Local verification does not establish production email delivery, hosted persistence, hosting runtime behavior, custom domains, or cloud operational monitoring. Verify these in the intended deployment environment.
+
+## Project documentation
+
+- [Screen map and requirements](docs/mvp-screen-map-and-requirements.md): product scope and planned flows.
+- [Design direction](docs/design-direction.md): design reference material.
+- [Icon attribution](docs/icon-attribution.md): packaged brand-icon sources.
+- [Weekly maintenance](docs/weekly-maintenance.md): scheduled tests, dependency audits, and issue inventories.
+- [Weekly backups](docs/weekly-backup.md): encrypted backups, setup, retention, and restore procedures.
+- [Baseline verification](artifacts/verification.md): recorded checks and outstanding gates.
+- [Photo upload verification](artifacts/photo-upload/verification.md) and [crop review](artifacts/photo-crop/manager-review.md): scoped photo-feature evidence.
+- [Template verification](artifacts/template-review/verification.md) and [link detection verification](artifacts/link-detection/url-first-verification.md): recorded checks for newer editor features.
+
+Verification artifacts describe specific past runs; they do not certify the current checkout or a hosted deployment.
